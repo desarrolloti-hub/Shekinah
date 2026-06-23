@@ -1,7 +1,6 @@
 /* FILE: homeController.js
    ========================================================
    CONTROLADOR PARA HOME CON:
-   - Animación de carga (Splash Screen)
    - Scroll horizontal
    - Planeta 3D de fondo (sin marcador, brillo reducido)
    ======================================================== */
@@ -14,7 +13,6 @@ let autoSlideInterval = null;
 let isAutoSliding = true;
 let isUserInteracting = false;
 let isScrolling = false;
-let splashCompleted = false;
 
 /* ========================================================
    FUNCION PRINCIPAL - EXPORTADA
@@ -23,12 +21,6 @@ export async function homeController() {
     console.log('🌍 Home Controller - Shekinah');
 
     await new Promise(resolve => setTimeout(resolve, 100));
-
-    // Iniciar la animación de carga del splash
-    initSplashScreen();
-
-    // Esperar a que termine la animación de carga
-    await waitForSplashComplete();
 
     // Inicializar el contenido principal
     initScrollDetection();
@@ -49,264 +41,6 @@ export async function homeController() {
             }, 1500);
         }
     });
-}
-
-/* ========================================================
-   SPLASH SCREEN - Animación de carga
-   ======================================================== */
-function initSplashScreen() {
-    // Verificar si ya existe el splash
-    if (document.querySelector('#splash-screen')) {
-        // Ya existe, solo iniciar la carga
-        startLoader();
-        return;
-    }
-
-    // El splash ya está en el HTML, solo iniciar la carga
-    startLoader();
-}
-
-function startLoader() {
-    const bar = document.getElementById('loader-bar');
-    if (!bar) return;
-
-    let width = 0;
-    const duration = 2000; // 2 segundos
-    const intervalTime = 20;
-    const steps = duration / intervalTime;
-    let currentStep = 0;
-
-    const interval = setInterval(() => {
-        currentStep++;
-        const progress = Math.min((currentStep / steps) * 100, 100);
-        bar.style.width = progress + '%';
-
-        if (currentStep >= steps) {
-            clearInterval(interval);
-
-            // Esperar 300ms y luego ocultar el splash
-            setTimeout(() => {
-                hideSplashScreen();
-            }, 300);
-        }
-    }, intervalTime);
-}
-
-function hideSplashScreen() {
-    const splash = document.getElementById('splash-screen');
-    const homeContent = document.getElementById('home-content');
-
-    if (splash) {
-        splash.classList.add('hide');
-
-        // Mostrar contenido principal
-        setTimeout(() => {
-            if (homeContent) {
-                homeContent.classList.add('show');
-            }
-            // Eliminar splash del DOM después de la animación
-            setTimeout(() => {
-                if (splash) {
-                    splash.style.display = 'none';
-                }
-                splashCompleted = true;
-                // Disparar evento para notificar que el splash terminó
-                document.dispatchEvent(new CustomEvent('splash:complete'));
-                console.log('✅ Splash screen completado');
-            }, 600);
-        }, 600);
-    } else {
-        // Si no hay splash, mostrar contenido directamente
-        if (homeContent) {
-            homeContent.classList.add('show');
-        }
-        splashCompleted = true;
-        document.dispatchEvent(new CustomEvent('splash:complete'));
-    }
-}
-
-function waitForSplashComplete() {
-    return new Promise((resolve) => {
-        if (splashCompleted) {
-            resolve();
-            return;
-        }
-
-        const checkComplete = () => {
-            if (splashCompleted) {
-                resolve();
-            } else {
-                // Escuchar el evento de completado
-                document.addEventListener('splash:complete', () => {
-                    resolve();
-                }, { once: true });
-            }
-        };
-
-        // También verificar si el splash ya se ocultó visualmente
-        const splash = document.getElementById('splash-screen');
-        if (splash && splash.classList.contains('hide')) {
-            // El splash ya se está ocultando, esperar a que termine
-            setTimeout(() => {
-                resolve();
-            }, 800);
-        } else {
-            checkComplete();
-        }
-
-        // Timeout por seguridad
-        setTimeout(resolve, 3500);
-    });
-}
-
-/* ========================================================
-   THREE.JS para el SPLASH (esfera 3D de carga)
-   ======================================================== */
-function initSplashThreeJs() {
-    const container = document.getElementById('threejs-container');
-    if (!container) return;
-
-    // Si ya tiene contenido, no reiniciar
-    if (container.querySelector('canvas')) return;
-
-    let scene, camera, renderer, globe;
-
-    function init() {
-        scene = new THREE.Scene();
-        scene.background = null;
-
-        const width = container.clientWidth || window.innerWidth;
-        const height = container.clientHeight || window.innerHeight;
-
-        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-        camera.position.set(0, 1, 8);
-        camera.lookAt(0, 0, 0);
-
-        renderer = new THREE.WebGLRenderer({
-            alpha: true,
-            antialias: true
-        });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0x000000, 0);
-        container.appendChild(renderer.domElement);
-
-        // LUCES
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        scene.add(ambientLight);
-
-        const dirLight = new THREE.DirectionalLight(0x7bc8e8, 1.2);
-        dirLight.position.set(5, 10, 7);
-        scene.add(dirLight);
-
-        const fillLight = new THREE.DirectionalLight(0x226688, 0.6);
-        fillLight.position.set(-5, 0, 5);
-        scene.add(fillLight);
-
-        const backLight = new THREE.DirectionalLight(0x3E92CC, 0.4);
-        backLight.position.set(0, -5, -10);
-        scene.add(backLight);
-
-        // ESFERA
-        const globeGroup = new THREE.Group();
-
-        const sphereGeom = new THREE.SphereGeometry(2.5, 64, 64);
-        const sphereMat = new THREE.MeshPhongMaterial({
-            color: 0x001b3d,
-            transparent: true,
-            opacity: 0.3,
-            roughness: 0.2,
-            metalness: 0.8,
-            emissive: 0x001b3d,
-            emissiveIntensity: 0.2,
-        });
-        const sphere = new THREE.Mesh(sphereGeom, sphereMat);
-        globeGroup.add(sphere);
-
-        const wireframeGeom = new THREE.SphereGeometry(2.55, 24, 16);
-        const wireframeMat = new THREE.MeshBasicMaterial({
-            color: 0x00a3ff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.25,
-        });
-        const wireframe = new THREE.Mesh(wireframeGeom, wireframeMat);
-        globeGroup.add(wireframe);
-
-        const wireframeGeom2 = new THREE.SphereGeometry(2.6, 16, 24);
-        const wireframeMat2 = new THREE.MeshBasicMaterial({
-            color: 0x0066aa,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.12,
-        });
-        const wireframe2 = new THREE.Mesh(wireframeGeom2, wireframeMat2);
-        globeGroup.add(wireframe2);
-
-        scene.add(globeGroup);
-        globe = globeGroup;
-
-        // ESTRELLAS
-        const starGeo = new THREE.BufferGeometry();
-        const starCount = 2000;
-        const positions = new Float32Array(starCount * 3);
-        for (let i = 0; i < starCount; i++) {
-            const radius = 30 + Math.random() * 70;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos((Math.random() * 2) - 1);
-            positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-            positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-            positions[i * 3 + 2] = radius * Math.cos(phi);
-        }
-        starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const starMat = new THREE.PointsMaterial({
-            color: 0x6caddf,
-            size: 0.08,
-            transparent: true,
-            opacity: 0.6,
-        });
-        const stars = new THREE.Points(starGeo, starMat);
-        scene.add(stars);
-
-        window.addEventListener('resize', onWindowResize, false);
-
-        animate();
-    }
-
-    function onWindowResize() {
-        const width = container.clientWidth || window.innerWidth;
-        const height = container.clientHeight || window.innerHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-
-        globe.rotation.y += 0.004;
-        globe.rotation.x += 0.001;
-
-        const stars = scene.children.find(child => child.isPoints);
-        if (stars) {
-            stars.rotation.y += 0.0002;
-        }
-
-        renderer.render(scene, camera);
-    }
-
-    init();
-}
-
-// Iniciar el Three.js del splash inmediatamente si el contenedor existe
-// La función se ejecutará cuando se cargue el DOM
-if (document.getElementById('threejs-container')) {
-    // Esperar a que el DOM esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSplashThreeJs);
-    } else {
-        initSplashThreeJs();
-    }
 }
 
 /* ========================================================
@@ -775,10 +509,4 @@ export function cleanupHome() {
     }
     const toast = document.querySelector('.toast-notification');
     if (toast) toast.remove();
-
-    // Limpiar splash si existe
-    const splash = document.getElementById('splash-screen');
-    if (splash) {
-        splash.style.display = 'none';
-    }
 }
