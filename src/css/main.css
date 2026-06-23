@@ -1,0 +1,12 @@
+/* ========================================
+   MAIN CSS - RSI Enterprise
+   Punto de entrada de todos los estilos
+   ======================================== */
+
+@import url('./base/variables.css');
+/* Pages */
+@import url('./pages/visitor/home/home.css');
+
+@import url('./components/visitor/nabvar.css');
+@import url('./components/visitor/planet.css')
+/* Si tienes otros archivos, agrégalos aquí */

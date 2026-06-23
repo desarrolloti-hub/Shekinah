@@ -1,0 +1,165 @@
+/* ========================================
+   VARIABLES GLOBALES - SHEKINAH LOGISTICS
+   Basado en soloplaneta.html
+   ======================================== */
+
+:root {
+    /* ========== COLORES PRIMARIOS ========== */
+    --shekinah-primary: #022B3A;
+    --shekinah-primary-light: #0A4C6E;
+    --shekinah-secondary: #1F7A8C;
+    --shekinah-accent: #3E92CC;
+    --shekinah-accent-light: #7AC6E6;
+    --shekinah-accent-dark: #1F6D8C;
+
+    /* ========== COLORES DE FONDO ========== */
+    --shekinah-bg-primary: #000c14;
+    --shekinah-bg-secondary: #001e2f;
+    --shekinah-bg-card: rgba(2, 43, 58, 0.75);
+    --shekinah-bg-glass: rgba(0, 20, 50, 0.4);
+    --shekinah-bg-stat: rgba(2, 43, 58, 0.5);
+    --shekinah-bg-badge: rgba(30, 144, 255, 0.12);
+    --shekinah-bg-service: rgba(62, 146, 204, 0.06);
+
+    /* ========== COLORES DE TEXTO ========== */
+    --shekinah-text-primary: #ffffff;
+    --shekinah-text-secondary: rgba(255, 255, 255, 0.85);
+    --shekinah-text-muted: rgba(255, 255, 255, 0.60);
+    --shekinah-text-dim: rgba(255, 255, 255, 0.40);
+    --shekinah-text-faint: rgba(255, 255, 255, 0.12);
+
+    /* ========== COLORES DEL OCÉANO ========== */
+    --shekinah-ocean: #0f3b4f;
+    --shekinah-ocean-dark: #05212e;
+    --shekinah-ocean-glow: #114466;
+
+    /* ========== BORDES ========== */
+    --shekinah-border-glass: rgba(0, 180, 255, 0.3);
+    --shekinah-border-card: rgba(62, 146, 204, 0.3);
+    --shekinah-border-soft: rgba(62, 146, 204, 0.12);
+    --shekinah-border-badge: rgba(30, 144, 255, 0.2);
+    --shekinah-border-stat: rgba(62, 146, 204, 0.15);
+
+    /* ========== SOMBRAS ========== */
+    --shekinah-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shekinah-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shekinah-shadow-lg: 0 30px 60px rgba(0, 0, 0, 0.5);
+    --shekinah-shadow-glow: 0 10px 30px rgba(31, 122, 140, 0.4);
+    --shekinah-shadow-glow-strong: 0 15px 40px rgba(31, 122, 140, 0.6);
+
+    /* ========== BOTONES ========== */
+    --shekinah-btn-primary-bg: #1F7A8C;
+    --shekinah-btn-primary-hover: #2a9bb0;
+    --shekinah-btn-secondary-bg: rgba(31, 122, 140, 0.4);
+    --shekinah-btn-secondary-hover: rgba(31, 122, 140, 0.7);
+    --shekinah-btn-text: #ffffff;
+
+    /* ========== BADGES ========== */
+    --shekinah-badge-text: #b0daff;
+
+    /* ========== STEP INDICATORS ========== */
+    --shekinah-step-dot-bg: rgba(255, 255, 255, 0.12);
+    --shekinah-step-dot-border: rgba(62, 146, 204, 0.25);
+    --shekinah-step-dot-active: #3E92CC;
+
+    /* ========== GLOW EFFECTS ========== */
+    --shekinah-neon-glow: 0 0 5px rgba(0, 160, 255, 0.5);
+    --shekinah-text-glow: 0 0 12px rgba(30, 136, 229, 0.3);
+    --shekinah-step-glow: 0 0 20px rgba(62, 146, 204, 0.5);
+
+    /* ========== LINKS ========== */
+    --shekinah-link-hover: #7AC6E6;
+
+    /* ========== GRADIENTES ========== */
+    --shekinah-gradient-bg: radial-gradient(circle at 20% 30%, #001e2f, #000c14);
+    --shekinah-gradient-line: linear-gradient(90deg, #3E92CC, transparent);
+    --shekinah-gradient-glass: linear-gradient(135deg, rgba(0, 20, 50, 0.4), rgba(0, 20, 50, 0.2));
+
+    /* ========== TRANSICIONES ========== */
+    --shekinah-transition-fast: 0.2s ease;
+    --shekinah-transition-base: 0.3s ease;
+    --shekinah-transition-slow: 0.5s ease;
+
+    /* ========== BORDES RADIUS ========== */
+    --shekinah-radius-sm: 8px;
+    --shekinah-radius-md: 10px;
+    --shekinah-radius-lg: 12px;
+    --shekinah-radius-xl: 16px;
+    --shekinah-radius-2xl: 24px;
+    --shekinah-radius-full: 9999px;
+
+    /* ========== ESPACIADOS ========== */
+    --shekinah-spacing-xs: 4px;
+    --shekinah-spacing-sm: 8px;
+    --shekinah-spacing-md: 16px;
+    --shekinah-spacing-lg: 24px;
+    --shekinah-spacing-xl: 32px;
+    --shekinah-spacing-2xl: 48px;
+    --shekinah-spacing-3xl: 64px;
+
+    /* ========== Z-INDEX ========== */
+    --shekinah-z-header: 50;
+    --shekinah-z-footer: 40;
+    --shekinah-z-cta: 45;
+    --shekinah-z-overlay: 30;
+    --shekinah-z-hint: 10;
+}
+
+/* ========================================
+   CLASES DE UTILIDAD RÁPIDAS
+   ======================================== */
+
+/* Glassmorphism */
+.shekinah-glass {
+    background: var(--shekinah-bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--shekinah-border-glass);
+}
+
+.shekinah-glass-card {
+    background: var(--shekinah-bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--shekinah-border-card);
+    box-shadow: var(--shekinah-shadow-lg);
+}
+
+/* Neón glow */
+.shekinah-neon {
+    text-shadow: var(--shekinah-neon-glow);
+}
+
+.shekinah-text-glow {
+    text-shadow: var(--shekinah-text-glow);
+}
+
+/* Gradientes */
+.shekinah-bg-gradient {
+    background: var(--shekinah-gradient-bg);
+}
+
+.shekinah-line-gold {
+    width: 60px;
+    height: 2px;
+    background: var(--shekinah-gradient-line);
+}
+
+/* Animaciones */
+@keyframes shekinahPulseGold {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.shekinah-animate-pulse {
+    animation: shekinahPulseGold 3s ease-in-out infinite;
+}
+
+@keyframes shekinahFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.shekinah-fade-in {
+    animation: shekinahFadeIn 0.8s ease forwards;
+}

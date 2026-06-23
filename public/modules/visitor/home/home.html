@@ -1,0 +1,445 @@
+<!-- FILE: home.html -->
+<!-- SHEKINAH - HOME con animación de carga y contenido principal -->
+
+<!-- ========================================================
+     SPLASH SCREEN - Pantalla de carga (se muestra primero)
+     ======================================================== -->
+<div id="splash-screen">
+    <div class="glow"></div>
+    <div id="threejs-container"></div>
+    <div class="brand">
+        <h1>Shekina</h1>
+        <p>Logística Global Sin Límites</p>
+    </div>
+    <div class="loader-wrapper">
+        <div class="progress-track">
+            <div class="progress-bar" id="loader-bar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================
+     CONTENIDO PRINCIPAL (se muestra después del splash)
+     ======================================================== -->
+<div id="home-content" class="home-content-hidden">
+    <main class="home-main">
+        <!-- Hero Section con scroll horizontal integrado -->
+        <section class="hero-section" id="heroScroll">
+            <div class="scroll-container" id="scrollContainer">
+                <div class="sticky-wrapper">
+                    <!-- Planeta 3D -->
+                    <div id="three-canvas"></div>
+
+                    <!-- Step Indicators -->
+                    <div class="step-indicators" id="stepIndicators">
+                        <div class="step-dot active" data-step="0"></div>
+                        <div class="step-dot" data-step="1"></div>
+                        <div class="step-dot" data-step="2"></div>
+                        <div class="step-dot" data-step="3"></div>
+                    </div>
+
+                    <!-- SLIDE 0: CONECTIVIDAD GLOBAL -->
+                    <div class="slide-content active" data-slide="0">
+                        <div class="info-box" style="align-self:center; margin-top:60px; margin-left:60px;">
+                            <span class="label">Empresa 100% Mexicana</span>
+                            <h2 style="font-size:1.8rem;">CONECTIVIDAD GLOBAL</h2>
+                            <div class="line"></div>
+                            <p style="font-size:0.95rem; line-height:1.8;">
+                                Somos una empresa 100% mexicana, dedicada y especializada en realizar procesos de comercio exterior brindando eficacia, eficiencia y seguridad en los procedimientos de las operaciones de importación y exportación, apegándonos a toda regulación y restricción de la ley, dando como resultado la completa satisfacción y confianza a nuestros clientes.
+                            </p>
+                            <span class="badge">100% Mexicana · Comercio Exterior</span>
+                            <div class="btn-group"></div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 1: SERVICIOS ESPECIALIZADOS -->
+                    <div class="slide-content" data-slide="1">
+                        <div class="info-box" style="align-self:center; margin-top:40px; margin-right:60px; margin-left:auto;">
+                            <span class="label">ESTAMOS ESPECIALIZADOS</span>
+                            <h2 style="font-size:1.6rem;">SERVICIOS ADUANALES</h2>
+                            <div class="line"></div>
+                            <div class="services-wrapper">
+                                <div class="services-column">
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Importación / Exportación Definitiva</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Importación / Exportación Virtual</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Importación / Exportación Temporales</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">IMMEX (Temporales y Definitivas)</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Cambios de Régimen</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Regularización de Mercancías</span></div>
+                                </div>
+                                <div class="services-column">
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">PROFEPA · SAGARPA · COFEPRIS</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Ventanilla Única (VUCEM)</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Tarifas Competitivas</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Entrega a domicilio (Toda la República)</span></div>
+                                    <div class="service-card"><span class="icon material-symbols-outlined">check_circle</span><span class="text">Logística Internacional</span></div>
+                                </div>
+                            </div>
+                            <span class="badge" style="margin-top:0.75rem;">11 especialidades · 100% compliance</span>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 2: NOSOTROS - MISIÓN Y VISIÓN -->
+                    <div class="slide-content" data-slide="2">
+                        <div class="nosotros-container">
+                            <div class="nosotros-header">
+                                <span class="label">Nosotros</span>
+                                <h2>ADUANAS ESTRATÉGICAS</h2>
+                                <div class="line"></div>
+                            </div>
+
+                            <div class="mision-vision-container">
+                                <div class="mv-card mv-card-left">
+                                    <div class="mv-card-header">
+                                        <span class="mv-icon material-symbols-outlined">target</span>
+                                        <h3 class="mv-title">MISIÓN</h3>
+                                    </div>
+                                    <p class="mv-text">
+                                        Ser una empresa líder en el ámbito de comercio exterior a nivel nacional e internacional, con estándares de calidad y seguridad que cumplan todas las expectativas de nuestros clientes, mediante el compromiso constante de una actualización en procesos aduanales y logísticos.
+                                    </p>
+                                    <div class="mv-tag">Compromiso · Calidad · Liderazgo</div>
+                                </div>
+
+                                <div class="mv-card mv-card-right">
+                                    <div class="mv-card-header">
+                                        <span class="mv-icon material-symbols-outlined">visibility</span>
+                                        <h3 class="mv-title">VISIÓN</h3>
+                                    </div>
+                                    <p class="mv-text">
+                                        Ofrecer y promover una coordinación integral en procesos aduanales y logísticos mediante los diferentes medios de transporte, aéreo, terrestre y marítimo. Con el fin de evitar gastos innecesarios que incrementan los costos y reduzcan sus ingresos, a la par de una comunicación continua, un trato personalizado y la garantía de nuestro buen servicio.
+                                    </p>
+                                    <div class="mv-tag">Innovación · Eficiencia · Confianza</div>
+                                </div>
+                            </div>
+
+                            <div class="nosotros-footer">
+                                <span class="badge">Cobertura en todas las aduanas del país</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 3: PROCESO DE IMPORTACIÓN AÉREO -->
+                    <div class="slide-content" data-slide="3">
+                        <div class="import-fullscreen">
+                            <div class="import-header">
+                                <span class="label">Procedimiento de Importación Aéreo</span>
+                                <h2>IMPORTACIÓN AÉREA</h2>
+                                <div class="line"></div>
+                                <p class="import-subtitle">8 pasos clave para una importación exitosa</p>
+                            </div>
+
+                            <div class="import-grid">
+                                <div class="import-card" data-step="1">
+                                    <div class="card-number">01</div>
+                                    <span class="card-icon material-symbols-outlined">description</span>
+                                    <h4 class="card-title">Contrato de Venta y Compra</h4>
+                                    <p class="card-desc">Celebración del acuerdo comercial entre las partes</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="2">
+                                    <div class="card-number">02</div>
+                                    <span class="card-icon material-symbols-outlined">local_shipping</span>
+                                    <h4 class="card-title">Contratación de Flete Internacional</h4>
+                                    <p class="card-desc">Servicios de agente aduanal y logística de transporte</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="3">
+                                    <div class="card-number">03</div>
+                                    <span class="card-icon material-symbols-outlined">track_changes</span>
+                                    <h4 class="card-title">Notificación de Guía y Tracking</h4>
+                                    <p class="card-desc">Seguimiento y monitoreo del embarque en tiempo real</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="4">
+                                    <div class="card-number">04</div>
+                                    <span class="card-icon material-symbols-outlined">apartment</span>
+                                    <h4 class="card-title">Proceso de Despacho</h4>
+                                    <p class="card-desc">Pago de maniobra e ingreso de unidad a aduana</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="5">
+                                    <div class="card-number">05</div>
+                                    <span class="card-icon material-symbols-outlined">computer</span>
+                                    <h4 class="card-title">Captura de Pedimento y Digitalización</h4>
+                                    <p class="card-desc">Registro en VUCEM y pago de pedimento</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="6">
+                                    <div class="card-number">06</div>
+                                    <span class="card-icon material-symbols-outlined">search</span>
+                                    <h4 class="card-title">Proceso de Previo y Clasificación</h4>
+                                    <p class="card-desc">Regularización y restricciones a cumplir</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="7">
+                                    <div class="card-number">07</div>
+                                    <span class="card-icon material-symbols-outlined">check_circle</span>
+                                    <h4 class="card-title">Liberación de Mercancía</h4>
+                                    <p class="card-desc">Desaduanamiento libre o reconocimiento aduanero</p>
+                                    <span class="card-arrow material-symbols-outlined">flight_takeoff</span>
+                                </div>
+
+                                <div class="import-card" data-step="8">
+                                    <div class="card-number">08</div>
+                                    <span class="card-icon material-symbols-outlined">inventory</span>
+                                    <h4 class="card-title">Cierre de Operaciones</h4>
+                                    <p class="card-desc">Entrega de mercancía y finalización del proceso</p>
+                                    <span class="card-arrow material-symbols-outlined">flag</span>
+                                </div>
+                            </div>
+
+                            <div class="import-footer"></div>
+                        </div>
+                    </div>
+
+                    <!-- Decorative UI Accents -->
+                    <div class="decorative-left">
+                        <div class="decorative-line"></div>
+                        <div class="decorative-text">PRECISION LOGISTICS</div>
+                        <div class="decorative-line"></div>
+                    </div>
+
+                    <!-- CTA Button flotante -->
+                    <div class="cta-button" id="ctaButton">
+                        <button class="btn-cta" data-action="cotizar"><span class="material-symbols-outlined" style="font-size:20px;">send</span> SOLICITAR COTIZACIÓN RUTA</button>
+                    </div>
+
+                    <!-- Footer (solo visible en Europa) -->
+                    <footer class="footer-scroll hidden" id="mainFooter">
+                        <div class="footer-scroll-content">
+                            <div class="footer-scroll-left">© 2024 SHEKINAH Logistics. Precision in Transit.</div>
+                            <div class="footer-scroll-right">
+                                <a href="#" data-link>Terms</a>
+                                <a href="#" data-link>Privacy</a>
+                                <a href="#" class="footer-link-gold" data-link>Network Map</a>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- ========================================================
+     ESTILOS DE LA ANIMACIÓN DE CARGA (solo para el home)
+     ======================================================== -->
+<style>
+    /* ========================================================
+       SPLASH SCREEN - Pantalla de carga
+       ======================================================== */
+    #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at center, #001b3d 0%, #000000 100%);
+        z-index: 9999;
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    #splash-screen.hide {
+        opacity: 0;
+        transform: scale(1.05);
+        pointer-events: none;
+    }
+
+    /* ========================================================
+       CONTENIDO PRINCIPAL (oculto hasta que termine la carga)
+       ======================================================== */
+    #home-content {
+        opacity: 0;
+        transition: opacity 0.8s ease;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 0 !important;
+        margin: 0 !important;
+        min-height: 0 !important;
+        max-width: 100% !important;
+        overflow: hidden;
+    }
+
+    #home-content.show {
+        opacity: 1;
+    }
+
+    /* ========================================================
+       ESFERA 3D (de la animación de carga)
+       ======================================================== */
+    #threejs-container {
+        width: 100%;
+        height: 55vh;
+        max-height: 450px;
+        display: block;
+        position: relative;
+        z-index: 1;
+    }
+
+    .glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50vmin;
+        height: 50vmin;
+        background: radial-gradient(circle at center, rgba(0, 163, 255, 0.12) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(40px);
+    }
+
+    /* ========================================================
+       MARCA / TÍTULO (de la animación de carga)
+       ======================================================== */
+    .brand {
+        text-align: center;
+        z-index: 2;
+        margin-top: -10px;
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .brand h1 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: clamp(2.2rem, 6vw, 4.5rem);
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        text-shadow: 0 0 60px rgba(0, 163, 255, 0.15);
+    }
+
+    .brand p {
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: clamp(0.7rem, 1vw, 1.1rem);
+        color: rgba(255, 255, 255, 0.35);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-top: 2px;
+    }
+
+    /* ========================================================
+       BARRA DE CARGA
+       ======================================================== */
+    .loader-wrapper {
+        position: absolute;
+        bottom: clamp(80px, 18vh, 160px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(400px, 70vw);
+        z-index: 2;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #0066aa, #00a3ff, #0066aa);
+        background-size: 200% 100%;
+        border-radius: 6px;
+        transition: width 0.15s ease;
+        animation: shimmer 1.5s infinite;
+        box-shadow: 0 0 20px rgba(0, 163, 255, 0.2);
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ========================================================
+       RESPONSIVE - SPLASH
+       ======================================================== */
+    @media (max-width: 768px) {
+        #threejs-container {
+            height: 40vh;
+            max-height: 320px;
+        }
+        .brand { margin-top: -5px; }
+        .loader-wrapper {
+            bottom: clamp(60px, 12vh, 90px);
+            width: min(320px, 80vw);
+        }
+        .progress-track { height: 5px; }
+    }
+
+    @media (max-width: 480px) {
+        #threejs-container {
+            height: 35vh;
+            max-height: 280px;
+        }
+        .brand h1 {
+            font-size: clamp(1.8rem, 8vw, 2.8rem);
+        }
+        .brand p {
+            font-size: clamp(0.5rem, 1.5vw, 0.7rem);
+            letter-spacing: 2px;
+        }
+        .loader-wrapper {
+            bottom: clamp(40px, 8vh, 60px);
+            width: min(260px, 85vw);
+        }
+        .progress-track { height: 4px; }
+    }
+
+    @media (max-width: 360px) {
+        #threejs-container {
+            height: 30vh;
+            max-height: 220px;
+        }
+        .brand h1 { font-size: 1.6rem; }
+        .loader-wrapper {
+            width: min(200px, 90vw);
+            bottom: clamp(30px, 6vh, 50px);
+        }
+        .progress-track { height: 3px; }
+    }
+
+    @media (min-width: 1600px) {
+        #threejs-container { max-height: 550px; }
+        .brand h1 {
+            font-size: clamp(3.5rem, 5vw, 5.5rem);
+        }
+        .brand p {
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+        }
+        .loader-wrapper {
+            width: min(500px, 40vw);
+            bottom: clamp(120px, 22vh, 200px);
+        }
+        .progress-track { height: 8px; border-radius: 8px; }
+    }
+</style>
