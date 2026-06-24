@@ -1678,3 +1678,15 @@ body {
     font-size: clamp(18px, 1.6vw, 28px) !important;
   }
 }
+
+/* ========================================================
+   AJUSTE ESPECÍFICO - SERVICIOS ADUANALES (SOLO ESCRITORIO)
+   ======================================================== */
+
+@media (min-width: 1025px) {
+  .slide-content[data-slide="1"] .info-box {
+    transform: translateY(8%) !important;
+    margin-left: auto !important;
+    margin-right: 60px !important;
+  }
+}
