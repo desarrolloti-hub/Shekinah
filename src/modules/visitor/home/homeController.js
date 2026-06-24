@@ -1,8 +1,9 @@
 /* FILE: homeController.js
    ========================================================
-   CONTROLADOR PARA HOME CON:
-   - Scroll horizontal
-   - Planeta 3D de fondo (sin marcador, brillo reducido)
+   CONTROLADOR PARA HOME CON SCROLL VIRTUAL
+   - Sin scroll nativo (overflow: hidden)
+   - Cambio de slides con eventos de rueda/táctil
+   - Todas las tarjetas en la misma posición fija
    ======================================================== */
 
 let currentSlide = 0;
@@ -14,16 +15,22 @@ let isAutoSliding = true;
 let isUserInteracting = false;
 let isScrolling = false;
 
+// Variables para control táctil
+let touchStartY = 0;
+let touchEndY = 0;
+let isSwiping = false;
+
 /* ========================================================
    FUNCION PRINCIPAL - EXPORTADA
    ======================================================== */
 export async function homeController() {
-    console.log('🌍 Home Controller - Shekinah');
+    console.log('🌍 Home Controller - Shekinah (Scroll Virtual)');
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
     // Inicializar el contenido principal
     initScrollDetection();
+    initTouchDetection();
     initStepIndicators();
     initButtons();
     initThreeJs();
@@ -65,30 +72,21 @@ function startAutoSlide() {
 }
 
 /* ========================================================
-   IR A UN SLIDE ESPECÍFICO
+   IR A UN SLIDE ESPECÍFICO (SIN SCROLL NATIVO)
    ======================================================== */
 function goToSlide(index) {
-    const container = document.getElementById('scrollContainer');
-    if (!container) return;
-
-    const viewportHeight = window.innerHeight;
-    container.scrollTo({
-        top: index * viewportHeight,
-        behavior: 'smooth'
-    });
-
+    // Solo actualizar el slide activo, sin scroll del contenedor
     currentSlide = index;
     updateActiveSlide(currentSlide);
 }
 
 /* ========================================================
-   DETECCIÓN DE SCROLL
+   DETECCIÓN DE SCROLL CON RULETA (DESKTOP)
    ======================================================== */
 function initScrollDetection() {
     const container = document.getElementById('scrollContainer');
     if (!container) return;
 
-    let lastScrollY = 0;
     let scrollDirection = 0;
 
     container.addEventListener('wheel', (e) => {
@@ -127,7 +125,8 @@ function initScrollDetection() {
 
     }, { passive: false });
 
-    container.addEventListener('keydown', (e) => {
+    // Teclado (flechas)
+    document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
             e.preventDefault();
             if (isScrolling) return;
@@ -167,6 +166,64 @@ function initScrollDetection() {
 }
 
 /* ========================================================
+   DETECCIÓN TÁCTIL PARA MÓVIL
+   ======================================================== */
+function initTouchDetection() {
+    const container = document.getElementById('scrollContainer');
+    if (!container) return;
+
+    container.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+        isSwiping = false;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+
+        if (isScrolling) return;
+
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchY;
+
+        if (Math.abs(deltaY) < 30) return;
+
+        isSwiping = true;
+
+        let nextSlide = currentSlide;
+
+        if (deltaY > 0) {
+            nextSlide = currentSlide + 1;
+        } else if (deltaY < 0) {
+            nextSlide = currentSlide - 1;
+        }
+
+        if (nextSlide < 0) nextSlide = 0;
+        if (nextSlide >= totalSlides) nextSlide = totalSlides - 1;
+
+        if (nextSlide !== currentSlide) {
+            isScrolling = true;
+            isUserInteracting = true;
+
+            goToSlide(nextSlide);
+
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+                isUserInteracting = false;
+                console.log('🔄 Touch scroll reactivado');
+            }, 1500);
+        }
+
+        touchStartY = touchY;
+
+    }, { passive: false });
+
+    container.addEventListener('touchend', (e) => {
+        isSwiping = false;
+    }, { passive: true });
+}
+
+/* ========================================================
    ACTUALIZA SLIDE ACTIVO
    ======================================================== */
 function updateActiveSlide(index) {
@@ -185,7 +242,6 @@ function updateActiveSlide(index) {
         footer.classList.toggle('visible', index === 3);
     }
 
-    // DISPARAR EVENTO PARA EL NAVBAR
     const event = new CustomEvent('slide:changed', {
         detail: { index: index }
     });
@@ -197,23 +253,13 @@ function updateActiveSlide(index) {
    ======================================================== */
 function initStepIndicators() {
     const dots = document.querySelectorAll('.step-dot');
-    const container = document.getElementById('scrollContainer');
 
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             isUserInteracting = true;
             isScrolling = true;
 
-            if (container) {
-                const viewportHeight = window.innerHeight;
-                container.scrollTo({
-                    top: index * viewportHeight,
-                    behavior: 'smooth'
-                });
-            }
-
-            currentSlide = index;
-            updateActiveSlide(currentSlide);
+            goToSlide(index);
 
             setTimeout(() => {
                 isScrolling = false;
@@ -253,7 +299,7 @@ function initButtons() {
 }
 
 /* ========================================================
-   INICIALIZA THREE.JS (PLANETA 3D DE FONDO - SIN MARCADOR)
+   INICIALIZA THREE.JS (PLANETA 3D)
    ======================================================== */
 function initThreeJs() {
     if (threeInitialized) return;
@@ -315,7 +361,6 @@ function createGlobe() {
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
-    // LUCES - REDUCIDAS PARA MENOS BRILLO
     const ambient = new THREE.AmbientLight(0x1a4763, 0.4);
     scene.add(ambient);
 
@@ -331,13 +376,11 @@ function createGlobe() {
     backLight.position.set(0, 1, -3);
     scene.add(backLight);
 
-    // GRUPO DEL PLANETA
     const earthGroup = new THREE.Group();
     scene.add(earthGroup);
 
     const geo = new THREE.SphereGeometry(1, 128, 128);
 
-    // OCÉANO (base del planeta)
     const oceanMat = new THREE.MeshStandardMaterial({
         color: 0x0a2a3a,
         emissive: 0x031a22,
@@ -348,7 +391,6 @@ function createGlobe() {
     const ocean = new THREE.Mesh(geo, oceanMat);
     earthGroup.add(ocean);
 
-    // TIERRA
     const loader = new THREE.TextureLoader();
     const landMap = loader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
     const landMat = new THREE.MeshStandardMaterial({
@@ -363,7 +405,6 @@ function createGlobe() {
     land.scale.set(1.002, 1.002, 1.002);
     earthGroup.add(land);
 
-    // WIREFRAME
     const wireMat = new THREE.MeshBasicMaterial({
         color: 0x2a6a8a,
         wireframe: true,
@@ -374,7 +415,6 @@ function createGlobe() {
     wire.scale.set(1.008, 1.008, 1.008);
     earthGroup.add(wire);
 
-    // NUBES
     const cloudTex = loader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png');
     const cloudMat = new THREE.MeshPhongMaterial({
         map: cloudTex,
@@ -386,7 +426,6 @@ function createGlobe() {
     const clouds = new THREE.Mesh(new THREE.SphereGeometry(1.012, 96, 96), cloudMat);
     earthGroup.add(clouds);
 
-    // ANILLO 1
     const ringPts = [];
     for (let i = 0; i <= 360; i += 6) {
         const rad = i * Math.PI / 180;
@@ -397,7 +436,6 @@ function createGlobe() {
     const ring = new THREE.LineLoop(ringGeo, ringMat);
     earthGroup.add(ring);
 
-    // ANILLO 2
     const ring2Pts = [];
     for (let i = 0; i <= 360; i += 5) {
         const rad = i * Math.PI / 180;
@@ -408,7 +446,6 @@ function createGlobe() {
     const ring2 = new THREE.LineLoop(ring2Geo, ring2Mat);
     earthGroup.add(ring2);
 
-    // ESTRELLAS DE FONDO
     const starGeo = new THREE.BufferGeometry();
     const starCount = 1800;
     const positions = new Float32Array(starCount * 3);
@@ -427,10 +464,8 @@ function createGlobe() {
     const stars = new THREE.Points(starGeo, starMat);
     scene.add(stars);
 
-    // VELOCIDAD DE ROTACIÓN
     let autoRotationSpeed = 0.0012;
 
-    // RESPONSIVE
     const resizeHandler = () => {
         const w = container.clientWidth || window.innerWidth;
         const h = container.clientHeight || window.innerHeight;
@@ -440,7 +475,6 @@ function createGlobe() {
     };
     window.addEventListener('resize', resizeHandler);
 
-    // ANIMACIÓN
     function animate() {
         requestAnimationFrame(animate);
 
@@ -454,7 +488,7 @@ function createGlobe() {
 
     animate();
     threeInitialized = true;
-    console.log('✅ Planeta 3D creado (sin marcador, brillo reducido)');
+    console.log('✅ Planeta 3D creado');
 }
 
 /* ========================================================
@@ -503,10 +537,13 @@ export function cleanupHome() {
         autoSlideInterval = null;
     }
 
-    const container = document.getElementById('three-canvas');
+    const container = document.getElementById('scrollContainer');
     if (container) {
-        container.innerHTML = '';
+        container.removeEventListener('touchstart', null);
+        container.removeEventListener('touchmove', null);
+        container.removeEventListener('touchend', null);
     }
+
     const toast = document.querySelector('.toast-notification');
     if (toast) toast.remove();
 }
