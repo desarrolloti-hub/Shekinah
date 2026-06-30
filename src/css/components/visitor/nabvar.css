@@ -44,6 +44,27 @@
   gap: 16px;
 }
 
+/* Contenedor del logo */
+.shekinah-logo-container {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: auto;
+}
+
+/* Logo SVG - en blanco */
+.shekinah-logo {
+  height: 100%;
+  width: auto;
+  filter: brightness(0) saturate(100%) invert(1);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  display: block;
+}
+
+.shekinah-logo:hover {
+  transform: scale(1.05);
+}
+
 .shekinah-menu-icon {
   color: rgba(255, 255, 255, 0.9);
   font-size: 28px;
@@ -55,22 +76,6 @@
 
 .shekinah-menu-icon:hover {
   transform: scale(1.1);
-}
-
-.shekinah-brand-title {
-  font-family: 'Hanken Grotesk', sans-serif;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #3E92CC;
-  line-height: 32px;
-  margin: 0;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.shekinah-brand-title:hover {
-  color: #7AC6E6;
 }
 
 /* ============================================
@@ -264,8 +269,9 @@
     display: none;
   }
 
-  .shekinah-brand-title {
-    font-size: 20px;
+  /* Ajuste del logo en móvil */
+  .shekinah-logo-container {
+    height: 40px;
   }
 
   .shekinah-avatar {
@@ -295,12 +301,13 @@
     padding: 0 16px;
   }
 
-  .shekinah-brand-title {
-    font-size: 17px;
-  }
-
   .shekinah-menu-icon {
     font-size: 24px;
+  }
+
+  /* Ajuste del logo en móvil pequeño */
+  .shekinah-logo-container {
+    height: 32px;
   }
 
   .shekinah-avatar {

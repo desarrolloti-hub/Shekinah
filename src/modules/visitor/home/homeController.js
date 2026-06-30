@@ -7,7 +7,7 @@
    ======================================================== */
 
 let currentSlide = 0;
-const totalSlides = 4;
+const totalSlides = 5;
 let scrollTimeout = null;
 let threeInitialized = false;
 let autoSlideInterval = null;
@@ -34,7 +34,14 @@ export async function homeController() {
     initStepIndicators();
     initButtons();
     initThreeJs();
-    startAutoSlide();
+    
+    // 🔥 INICIAR ANIMACIÓN DE SPLASH
+    initSplashAnimation();
+    
+    // Iniciar auto-slide DESPUÉS de que termine la animación
+    setTimeout(() => {
+        startAutoSlide();
+    }, 5000); // Esperar a que termine la animación (~4.5s + margen)
 
     // ESCUCHAR NAVEGACIÓN DESDE EL NAVBAR
     document.addEventListener('navigate:toSlide', (e) => {
@@ -48,6 +55,57 @@ export async function homeController() {
             }, 1500);
         }
     });
+}
+
+/* ========================================================
+   ANIMACIÓN DE SPLASH
+   ======================================================== */
+// FILE: homeController.js (Fragmento actualizado de initSplashAnimation)
+/* ========================================================
+   ANIMACIÓN DE SPLASH (ACTUALIZADA)
+   ======================================================== */
+function initSplashAnimation() {
+    const splash = document.getElementById('splashScreen');
+    const avion = document.getElementById('airplane');
+
+    if (!splash) {
+        console.warn('⚠️ Splash screen no encontrada');
+        return;
+    }
+
+    // Cuando termina la animación del avión
+    if (avion) {
+        avion.addEventListener('animationend', function() {
+            // Añadir la clase 'sweeping' para activar el barrido diagonal de la máscara
+            if (!splash.classList.contains('sweeping')) {
+                splash.classList.add('sweeping');
+            }
+            
+            setTimeout(() => {
+                splash.classList.add('hidden');
+                console.log('✅ Animación de carga completada');
+                document.dispatchEvent(new CustomEvent('splash:completed'));
+            }, 2200); // Tiempo para que el barrido se complete
+        });
+    }
+
+    // También iniciamos el barrido después de un tiempo fijo (por si la animación del avión falla)
+    setTimeout(() => {
+        splash.classList.add('sweeping');
+        console.log('🔄 Iniciando barrido diagonal inverso (timeout de seguridad)');
+    }, 3500); // Ajustado para dar tiempo a que el logo se muestre
+
+    // Timeout de seguridad final
+    setTimeout(() => {
+        if (!splash.classList.contains('hidden')) {
+            splash.classList.add('sweeping');
+            setTimeout(() => {
+                splash.classList.add('hidden');
+                console.log('⏱️ Timeout de seguridad activado');
+                document.dispatchEvent(new CustomEvent('splash:completed'));
+            }, 2200);
+        }
+    }, 8000);
 }
 
 /* ========================================================
@@ -75,7 +133,6 @@ function startAutoSlide() {
    IR A UN SLIDE ESPECÍFICO (SIN SCROLL NATIVO)
    ======================================================== */
 function goToSlide(index) {
-    // Solo actualizar el slide activo, sin scroll del contenedor
     currentSlide = index;
     updateActiveSlide(currentSlide);
 }
@@ -83,18 +140,24 @@ function goToSlide(index) {
 /* ========================================================
    DETECCIÓN DE SCROLL CON RULETA (DESKTOP)
    ======================================================== */
+/* ========================================================
+   DETECCIÓN DE SCROLL CON RULETA (DESKTOP)
+   ======================================================== */
 function initScrollDetection() {
-    const container = document.getElementById('scrollContainer');
-    if (!container) return;
-
     let scrollDirection = 0;
+    let lastWheelTime = 0;
 
-    container.addEventListener('wheel', (e) => {
+    // Escuchar en el documento completo, sin filtros
+    document.addEventListener('wheel', (e) => {
         e.preventDefault();
 
-        const delta = e.deltaY;
+        const now = Date.now();
+        if (now - lastWheelTime < 800) return; // Debounce
+        lastWheelTime = now;
 
         if (isScrolling) return;
+
+        const delta = e.deltaY;
 
         if (delta > 0) {
             scrollDirection = 1;
@@ -113,6 +176,7 @@ function initScrollDetection() {
             isScrolling = true;
             isUserInteracting = true;
 
+            console.log(`🔄 Scroll: ${delta > 0 ? 'abajo' : 'arriba'} → slide ${nextSlide}`);
             goToSlide(nextSlide);
 
             clearTimeout(scrollTimeout);
@@ -120,7 +184,7 @@ function initScrollDetection() {
                 isScrolling = false;
                 isUserInteracting = false;
                 console.log('🔄 Scroll reactivado');
-            }, 1500);
+            }, 800);
         }
 
     }, { passive: false });
@@ -142,7 +206,7 @@ function initScrollDetection() {
                 setTimeout(() => {
                     isScrolling = false;
                     isUserInteracting = false;
-                }, 1500);
+                }, 800);
             }
         } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
             e.preventDefault();
@@ -159,7 +223,7 @@ function initScrollDetection() {
                 setTimeout(() => {
                     isScrolling = false;
                     isUserInteracting = false;
-                }, 1500);
+                }, 800);
             }
         }
     });
@@ -237,10 +301,11 @@ function updateActiveSlide(index) {
         dot.classList.toggle('active', i === index);
     });
 
-    const footer = document.getElementById('mainFooter');
-    if (footer) {
-        footer.classList.toggle('visible', index === 3);
-    }
+  // En updateActiveSlide()
+const footer = document.getElementById('mainFooter');
+if (footer) {
+    footer.classList.toggle('visible', index === 4); // ← Cambia 3 por 4 si quieres que se muestre en Contacto
+}
 
     const event = new CustomEvent('slide:changed', {
         detail: { index: index }

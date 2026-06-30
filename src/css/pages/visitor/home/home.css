@@ -1690,3 +1690,775 @@ body {
     margin-right: 60px !important;
   }
 }
+
+/* ========================================================
+   SPLASH SCREEN - ANIMACIÓN DE CARGA (home.css)
+   ======================================================== */
+
+/* Pantalla de carga - se superpone al contenido */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0d2847;
+    z-index: 9999;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom left, white 50%, transparent 50%);
+    -webkit-mask-image: linear-gradient(to bottom left, white 50%, transparent 50%);
+    mask-size: 200% 200%;
+    -webkit-mask-size: 200% 200%;
+    mask-position: 100% 0%;
+    -webkit-mask-position: 100% 0%;
+    transition: mask-position 2s cubic-bezier(0.65, 0, 0.35, 1),
+                -webkit-mask-position 2s cubic-bezier(0.65, 0, 0.35, 1),
+                opacity 0.6s ease 2.5s;
+}
+
+.splash-screen.sweeping {
+    mask-position: 0% 100%;
+    -webkit-mask-position: 0% 100%;
+}
+
+.splash-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+.splash-bg {
+    position: absolute;
+    inset: 0;
+    background: #0d2847;
+    z-index: 0;
+}
+
+/* Texto SHEKINAH en el splash */
+.shekinah-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(4rem, 15vw, 10rem);
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-family: 'Georgia', serif;
+    animation: fadeShekinah 2s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+    white-space: nowrap;
+    text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
+                 0 0 120px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeShekinah {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* El avión */
+.airplane {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: auto;
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.6));
+    animation: flyDiagonal 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 1s;
+    transform-origin: center;
+}
+
+@keyframes flyDiagonal {
+    0% {
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        transform: scale(0.9) rotate(-5deg);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    90% {
+        opacity: 1;
+        transform: scale(1.08) rotate(3deg);
+    }
+    100% {
+        bottom: 100vh;
+        left: 100vw;
+        opacity: 0;
+        transform: scale(0.95) rotate(8deg);
+    }
+}
+
+/* Barra de progreso sutil */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 2;
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    animation: progressLoad 4.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 1s;
+}
+
+@keyframes progressLoad {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Ajuste para móviles */
+@media (max-width: 600px) {
+    .airplane {
+        width: 200px;
+    }
+    .shekinah-text {
+        font-size: clamp(3rem, 12vw, 5rem);
+        letter-spacing: 4px;
+    }
+}
+
+/* Para tablets */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .airplane {
+        width: 250px;
+    }
+}
+
+
+
+/* FILE: home.css - PARTE 2 */ 
+/* (Añadir al final del archivo) */
+
+/* ========================================================
+   NUEVO LOGO SVG PARA EL SPLASH SCREEN
+   ======================================================== */
+
+.splash-logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: clamp(200px, 40vw, 500px);
+    height: auto;
+    animation: floatLogo 6s ease-in-out infinite;
+}
+
+.splash-logo-container .logo-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 30px rgba(50, 186, 255, 0.15));
+    transform-origin: center;
+}
+
+/* Animación de flotación para el logo */
+@keyframes floatLogo {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-15px); }
+}
+
+/* ===== ANIMACIÓN DE BARRA DE LUZ ===== */
+/* Cada trazo se ilumina con un gradiente que se desplaza */
+.splash-logo-container .st0 {
+    fill: #005F84;
+    stroke: url(#lightGradient);
+    stroke-width: 3;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: lightTrail 4s ease-in-out infinite;
+}
+
+/* Retrasos escalonados para crear el efecto de "onda" */
+.splash-logo-container .st0:nth-child(1) { animation-delay: 0s; }
+.splash-logo-container .st0:nth-child(2) { animation-delay: 0.1s; }
+.splash-logo-container .st0:nth-child(3) { animation-delay: 0.2s; }
+.splash-logo-container .st0:nth-child(4) { animation-delay: 0.3s; }
+.splash-logo-container .st0:nth-child(5) { animation-delay: 0.4s; }
+.splash-logo-container .st0:nth-child(6) { animation-delay: 0.5s; }
+.splash-logo-container .st0:nth-child(7) { animation-delay: 0.6s; }
+.splash-logo-container .st0:nth-child(8) { animation-delay: 0.7s; }
+.splash-logo-container .st0:nth-child(9) { animation-delay: 0.8s; }
+.splash-logo-container .st0:nth-child(10) { animation-delay: 0.9s; }
+.splash-logo-container .st0:nth-child(11) { animation-delay: 1.0s; }
+.splash-logo-container .st0:nth-child(12) { animation-delay: 1.1s; }
+.splash-logo-container .st0:nth-child(13) { animation-delay: 1.2s; }
+.splash-logo-container .st0:nth-child(14) { animation-delay: 1.3s; }
+.splash-logo-container .st0:nth-child(15) { animation-delay: 1.4s; }
+.splash-logo-container .st0:nth-child(16) { animation-delay: 1.5s; }
+.splash-logo-container .st0:nth-child(17) { animation-delay: 1.6s; }
+.splash-logo-container .st0:nth-child(18) { animation-delay: 1.7s; }
+.splash-logo-container .st0:nth-child(19) { animation-delay: 1.8s; }
+.splash-logo-container .st0:nth-child(20) { animation-delay: 1.9s; }
+.splash-logo-container .st0:nth-child(21) { animation-delay: 2.0s; }
+.splash-logo-container .st0:nth-child(22) { animation-delay: 2.1s; }
+.splash-logo-container .st0:nth-child(23) { animation-delay: 2.2s; }
+.splash-logo-container .st0:nth-child(24) { animation-delay: 2.3s; }
+.splash-logo-container .st0:nth-child(25) { animation-delay: 2.4s; }
+.splash-logo-container .st0:nth-child(26) { animation-delay: 2.5s; }
+.splash-logo-container .st0:nth-child(27) { animation-delay: 2.6s; }
+.splash-logo-container .st0:nth-child(28) { animation-delay: 2.7s; }
+.splash-logo-container .st0:nth-child(29) { animation-delay: 2.8s; }
+.splash-logo-container .st0:nth-child(30) { animation-delay: 2.9s; }
+.splash-logo-container .st0:nth-child(31) { animation-delay: 3.0s; }
+.splash-logo-container .st0:nth-child(32) { animation-delay: 3.1s; }
+.splash-logo-container .st0:nth-child(33) { animation-delay: 3.2s; }
+.splash-logo-container .st0:nth-child(34) { animation-delay: 3.3s; }
+.splash-logo-container .st0:nth-child(35) { animation-delay: 3.4s; }
+.splash-logo-container .st0:nth-child(36) { animation-delay: 3.5s; }
+
+@keyframes lightTrail {
+    0% {
+        stroke-dashoffset: 2000;
+        fill: transparent;
+        stroke: #32BAFF;
+    }
+    40% {
+        stroke-dashoffset: 0;
+        fill: #005F84;
+        stroke: #32BAFF;
+    }
+    60% {
+        stroke-dashoffset: 0;
+        fill: #005F84;
+        stroke: #32BAFF;
+    }
+    100% {
+        stroke-dashoffset: 2000;
+        fill: #005F84;
+        stroke: #32BAFF;
+    }
+}
+
+/* Efecto de brillo en el contorno */
+.splash-logo-container .st0 {
+    filter: drop-shadow(0 0 8px rgba(50, 186, 255, 0.3));
+}
+
+/* Animación del planeta rotando */
+.splash-logo-container .planet-rotate {
+    transform-origin: 960px 540px;
+    animation: rotatePlanet 30s linear infinite;
+}
+
+@keyframes rotatePlanet {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ajuste para móviles */
+@media (max-width: 600px) {
+    .splash-logo-container {
+        width: clamp(150px, 50vw, 300px);
+    }
+}
+/* ========================================================
+   SLIDE 4: CONTACTO
+   ======================================================== */
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    gap: var(--shekinah-spacing-lg, 20px);
+}
+
+.contact-header {
+    text-align: center;
+    width: 100%;
+}
+
+.contact-header .label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--shekinah-accent-light, #7AC6E6);
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--shekinah-spacing-xs, 4px);
+}
+
+.contact-header h2 {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--shekinah-text-primary, #ffffff);
+    margin: 6px 0 10px;
+    letter-spacing: -0.02em;
+}
+
+.contact-header .line {
+    width: 50px;
+    height: 3px;
+    background: var(--shekinah-accent, #3e92cc);
+    margin: 6px auto 14px;
+    border-radius: 2px;
+}
+
+.contact-subtitle {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--shekinah-text-muted, rgba(255,255,255,0.4));
+    margin: 0;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Tarjetas de contacto */
+.contact-card {
+    background: var(--shekinah-bg-stat, rgba(2,43,58,0.5));
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.08));
+    border-radius: var(--shekinah-radius-lg, 12px);
+    padding: 24px 22px 20px;
+    transition: var(--shekinah-transition-base, 0.3s ease);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--shekinah-radius-lg, 12px);
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(62, 146, 204, 0.2), transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--shekinah-transition-base, 0.3s ease);
+}
+
+.contact-card:hover::before {
+    opacity: 1;
+}
+
+.contact-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--shekinah-border-card, rgba(62,146,204,0.25));
+    box-shadow: var(--shekinah-shadow-lg, 0 12px 40px rgba(0,0,0,0.4));
+}
+
+/* Variantes de color para cada tarjeta */
+.contact-card-primary:hover {
+    border-color: rgba(62, 146, 204, 0.5);
+    box-shadow: 0 12px 40px rgba(62, 146, 204, 0.15);
+}
+
+.contact-card-secondary:hover {
+    border-color: rgba(122, 198, 230, 0.4);
+    box-shadow: 0 12px 40px rgba(122, 198, 230, 0.12);
+}
+
+.contact-card-tertiary:hover {
+    border-color: rgba(50, 186, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(50, 186, 255, 0.1);
+}
+
+.contact-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.contact-icon {
+    font-size: 1.2rem;
+    color: var(--shekinah-accent-light, #7AC6E6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.1));
+}
+
+.contact-badge {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--shekinah-badge-text, #b0daff);
+    background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+    padding: 2px 12px;
+    border-radius: var(--shekinah-radius-full, 9999px);
+    border: 1px solid var(--shekinah-border-badge, rgba(30,144,255,0.2));
+    letter-spacing: 0.5px;
+}
+
+.contact-name {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--shekinah-text-primary, #ffffff);
+    margin: 0 0 8px 0;
+    letter-spacing: 0.5px;
+}
+
+.contact-divider {
+    width: 30px;
+    height: 2px;
+    background: var(--shekinah-accent, #3e92cc);
+    margin: 0 0 14px 0;
+    border-radius: 2px;
+    opacity: 0.4;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--shekinah-text-secondary, rgba(255,255,255,0.75));
+    line-height: 1.4;
+}
+
+.contact-item-icon {
+    font-size: 18px;
+    color: var(--shekinah-accent-light, #7AC6E6);
+    opacity: 0.7;
+    flex-shrink: 0;
+    width: 24px;
+}
+
+.contact-item-text {
+    word-break: break-word;
+}
+
+/* Footer de contacto */
+.contact-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 14px 24px;
+    background: var(--shekinah-bg-stat, rgba(2,43,58,0.3));
+    border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.08));
+    border-radius: var(--shekinah-radius-lg, 12px);
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.contact-footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--shekinah-text-secondary, rgba(255,255,255,0.7));
+}
+
+.contact-footer-item .material-symbols-outlined {
+    font-size: 20px;
+    color: var(--shekinah-accent-light, #7AC6E6);
+    opacity: 0.6;
+}
+
+.contact-link {
+    color: var(--shekinah-accent-light, #7AC6E6);
+    text-decoration: none;
+    transition: var(--shekinah-transition-base, 0.3s ease);
+    font-weight: 500;
+}
+
+.contact-link:hover {
+    color: var(--shekinah-accent, #3e92cc);
+    text-decoration: underline;
+}
+
+.contact-footer-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--shekinah-border-soft, rgba(62,146,204,0.15));
+}
+
+.contact-badge-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.contact-badge-footer .badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--shekinah-badge-text, #b0daff);
+    background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+    padding: 4px 14px;
+    border-radius: var(--shekinah-radius-full, 9999px);
+    border: 1px solid var(--shekinah-border-badge, rgba(30,144,255,0.2));
+}
+
+/* Animación de entrada para las tarjetas de contacto */
+.slide-content[data-slide="4"] .contact-card {
+    opacity: 0;
+    animation: contactCardFadeIn 0.6s ease forwards;
+}
+
+.slide-content[data-slide="4"] .contact-card:nth-child(1) { animation-delay: 0.05s; }
+.slide-content[data-slide="4"] .contact-card:nth-child(2) { animation-delay: 0.15s; }
+.slide-content[data-slide="4"] .contact-card:nth-child(3) { animation-delay: 0.25s; }
+
+@keyframes contactCardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ========================================================
+   RESPONSIVE - CONTACTO
+   ======================================================== */
+
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .contact-container {
+        gap: 12px;
+    }
+
+    .contact-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .contact-subtitle {
+        font-size: 0.7rem;
+    }
+
+    .contact-card {
+        padding: 18px 16px 16px;
+    }
+
+    .contact-name {
+        font-size: 0.7rem;
+    }
+
+    .contact-item {
+        font-size: 0.65rem;
+    }
+
+    .contact-item-icon {
+        font-size: 16px;
+        width: 20px;
+    }
+
+    .contact-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .contact-badge {
+        font-size: 0.5rem;
+        padding: 1px 8px;
+    }
+
+    .contact-footer {
+        padding: 10px 16px;
+        gap: 12px;
+    }
+
+    .contact-footer-item {
+        font-size: 0.65rem;
+    }
+
+    .contact-footer-item .material-symbols-outlined {
+        font-size: 16px;
+    }
+
+    .contact-footer-divider {
+        height: 16px;
+    }
+
+    .contact-badge-footer .badge {
+        font-size: 0.55rem;
+        padding: 2px 10px;
+    }
+}
+
+@media (max-width: 550px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 4px 0;
+    }
+
+    .contact-container {
+        gap: 8px;
+        padding: 0 4px;
+    }
+
+    .contact-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .contact-header .label {
+        font-size: 0.55rem;
+    }
+
+    .contact-header .line {
+        margin: 2px auto 8px;
+    }
+
+    .contact-subtitle {
+        font-size: 0.6rem;
+    }
+
+    .contact-card {
+        padding: 14px 14px 12px;
+        border-radius: 8px;
+    }
+
+    .contact-card-header {
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    .contact-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+
+    .contact-badge {
+        font-size: 0.45rem;
+        padding: 1px 6px;
+    }
+
+    .contact-name {
+        font-size: 0.65rem;
+        margin-bottom: 4px;
+    }
+
+    .contact-divider {
+        width: 20px;
+        height: 2px;
+        margin-bottom: 8px;
+    }
+
+    .contact-item {
+        font-size: 0.6rem;
+        padding: 2px 0;
+        gap: 6px;
+    }
+
+    .contact-item-icon {
+        font-size: 14px;
+        width: 18px;
+    }
+
+    .contact-footer {
+        padding: 8px 12px;
+        gap: 8px;
+        flex-direction: column;
+        border-radius: 8px;
+    }
+
+    .contact-footer-divider {
+        width: 40px;
+        height: 1px;
+    }
+
+    .contact-footer-item {
+        font-size: 0.55rem;
+        gap: 6px;
+    }
+
+    .contact-footer-item .material-symbols-outlined {
+        font-size: 14px;
+    }
+
+    .contact-badge-footer .badge {
+        font-size: 0.45rem;
+        padding: 2px 8px;
+    }
+}
+
+@media (min-width: 2000px) {
+    .contact-card {
+        padding: clamp(24px, 2vw, 40px) clamp(22px, 2vw, 36px) !important;
+    }
+
+    .contact-name {
+        font-size: clamp(0.85rem, 0.9vw, 1.2rem) !important;
+    }
+
+    .contact-item {
+        font-size: clamp(0.78rem, 0.7vw, 1rem) !important;
+    }
+
+    .contact-icon {
+        width: clamp(40px, 3vw, 56px) !important;
+        height: clamp(40px, 3vw, 56px) !important;
+        font-size: clamp(1.2rem, 1.2vw, 1.8rem) !important;
+    }
+}
+/* En home.css - Agrega esto */
+#scrollContainer {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden !important;
+    position: relative;
+    cursor: default;
+    touch-action: none; /* ← IMPORTANTE para táctil */
+}
