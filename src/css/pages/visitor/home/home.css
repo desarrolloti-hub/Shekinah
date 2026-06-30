@@ -1904,7 +1904,7 @@ body {
 /* ===== ANIMACIÓN DE BARRA DE LUZ ===== */
 /* Cada trazo se ilumina con un gradiente que se desplaza */
 .splash-logo-container .st0 {
-    fill: #005F84;
+    fill: #b57903;
     stroke: url(#lightGradient);
     stroke-width: 3;
     stroke-dasharray: 2000;
@@ -1954,30 +1954,29 @@ body {
     0% {
         stroke-dashoffset: 2000;
         fill: transparent;
-        stroke: #32BAFF;
+        stroke: #FFD700;      /* ← dorado brillante al inicio */
     }
     40% {
         stroke-dashoffset: 0;
-        fill: #005F84;
-        stroke: #32BAFF;
+        fill: #5C3D00;        /* ← dorado oscuro al rellenarse */
+        stroke: #FFD700;      /* ← dorado brillante */
     }
     60% {
         stroke-dashoffset: 0;
-        fill: #005F84;
-        stroke: #32BAFF;
+        fill: #5C3D00;        /* ← dorado oscuro */
+        stroke: #FFD700;      /* ← dorado brillante */
     }
     100% {
         stroke-dashoffset: 2000;
-        fill: #005F84;
-        stroke: #32BAFF;
+        fill: #5C3D00;        /* ← dorado oscuro al final */
+        stroke: #FFD700;      /* ← dorado brillante */
     }
 }
 
 /* Efecto de brillo en el contorno */
 .splash-logo-container .st0 {
-    filter: drop-shadow(0 0 8px rgba(50, 186, 255, 0.3));
+    filter: drop-shadow(0 0 12px rgba(185, 157, 0, 0.832));
 }
-
 /* Animación del planeta rotando */
 .splash-logo-container .planet-rotate {
     transform-origin: 960px 540px;
