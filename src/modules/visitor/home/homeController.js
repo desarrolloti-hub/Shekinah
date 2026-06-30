@@ -2,8 +2,8 @@
    ========================================================
    CONTROLADOR PARA HOME CON SCROLL VIRTUAL
    - Sin scroll nativo (overflow: hidden)
-   - Cambio de slides con eventos de rueda/táctil
-   - Todas las tarjetas en la misma posición fija
+   - Cambio de slides con eventos de rueda/tactil
+   - Todas las tarjetas en la misma posicion fija
    ======================================================== */
 
 let currentSlide = 0;
@@ -15,7 +15,7 @@ let isAutoSliding = true;
 let isUserInteracting = false;
 let isScrolling = false;
 
-// Variables para control táctil
+// Variables para control tactil
 let touchStartY = 0;
 let touchEndY = 0;
 let isSwiping = false;
@@ -24,7 +24,6 @@ let isSwiping = false;
    FUNCION PRINCIPAL - EXPORTADA
    ======================================================== */
 export async function homeController() {
-    console.log('🌍 Home Controller - Shekinah (Scroll Virtual)');
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -35,15 +34,15 @@ export async function homeController() {
     initButtons();
     initThreeJs();
     
-    // 🔥 INICIAR ANIMACIÓN DE SPLASH
+    // INICIAR ANIMACION DE SPLASH
     initSplashAnimation();
     
-    // Iniciar auto-slide DESPUÉS de que termine la animación
+    // Iniciar auto-slide DESPUES de que termine la animacion
     setTimeout(() => {
         startAutoSlide();
-    }, 5000); // Esperar a que termine la animación (~4.5s + margen)
+    }, 5000); // Esperar a que termine la animacion (~4.5s + margen)
 
-    // ESCUCHAR NAVEGACIÓN DESDE EL NAVBAR
+    // ESCUCHAR NAVEGACION DESDE EL NAVBAR
     document.addEventListener('navigate:toSlide', (e) => {
         if (e.detail && e.detail.index !== undefined) {
             isUserInteracting = true;
@@ -58,41 +57,34 @@ export async function homeController() {
 }
 
 /* ========================================================
-   ANIMACIÓN DE SPLASH
-   ======================================================== */
-// FILE: homeController.js (Fragmento actualizado de initSplashAnimation)
-/* ========================================================
-   ANIMACIÓN DE SPLASH (ACTUALIZADA)
+   ANIMACION DE SPLASH
    ======================================================== */
 function initSplashAnimation() {
     const splash = document.getElementById('splashScreen');
     const avion = document.getElementById('airplane');
 
     if (!splash) {
-        console.warn('⚠️ Splash screen no encontrada');
         return;
     }
 
-    // Cuando termina la animación del avión
+    // Cuando termina la animacion del avion
     if (avion) {
         avion.addEventListener('animationend', function() {
-            // Añadir la clase 'sweeping' para activar el barrido diagonal de la máscara
+            // Anadir la clase 'sweeping' para activar el barrido diagonal de la mascara
             if (!splash.classList.contains('sweeping')) {
                 splash.classList.add('sweeping');
             }
             
             setTimeout(() => {
                 splash.classList.add('hidden');
-                console.log('✅ Animación de carga completada');
                 document.dispatchEvent(new CustomEvent('splash:completed'));
             }, 2200); // Tiempo para que el barrido se complete
         });
     }
 
-    // También iniciamos el barrido después de un tiempo fijo (por si la animación del avión falla)
+    // Tambien iniciamos el barrido despues de un tiempo fijo (por si la animacion del avion falla)
     setTimeout(() => {
         splash.classList.add('sweeping');
-        console.log('🔄 Iniciando barrido diagonal inverso (timeout de seguridad)');
     }, 3500); // Ajustado para dar tiempo a que el logo se muestre
 
     // Timeout de seguridad final
@@ -101,7 +93,6 @@ function initSplashAnimation() {
             splash.classList.add('sweeping');
             setTimeout(() => {
                 splash.classList.add('hidden');
-                console.log('⏱️ Timeout de seguridad activado');
                 document.dispatchEvent(new CustomEvent('splash:completed'));
             }, 2200);
         }
@@ -130,7 +121,7 @@ function startAutoSlide() {
 }
 
 /* ========================================================
-   IR A UN SLIDE ESPECÍFICO (SIN SCROLL NATIVO)
+   IR A UN SLIDE ESPECIFICO (SIN SCROLL NATIVO)
    ======================================================== */
 function goToSlide(index) {
     currentSlide = index;
@@ -138,10 +129,7 @@ function goToSlide(index) {
 }
 
 /* ========================================================
-   DETECCIÓN DE SCROLL CON RULETA (DESKTOP)
-   ======================================================== */
-/* ========================================================
-   DETECCIÓN DE SCROLL CON RULETA (DESKTOP)
+   DETECCION DE SCROLL CON RULETA (DESKTOP)
    ======================================================== */
 function initScrollDetection() {
     let scrollDirection = 0;
@@ -176,14 +164,12 @@ function initScrollDetection() {
             isScrolling = true;
             isUserInteracting = true;
 
-            console.log(`🔄 Scroll: ${delta > 0 ? 'abajo' : 'arriba'} → slide ${nextSlide}`);
             goToSlide(nextSlide);
 
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
                 isUserInteracting = false;
-                console.log('🔄 Scroll reactivado');
             }, 800);
         }
 
@@ -230,7 +216,7 @@ function initScrollDetection() {
 }
 
 /* ========================================================
-   DETECCIÓN TÁCTIL PARA MÓVIL
+   DETECCION TACTIL PARA MOVIL
    ======================================================== */
 function initTouchDetection() {
     const container = document.getElementById('scrollContainer');
@@ -274,7 +260,6 @@ function initTouchDetection() {
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
                 isUserInteracting = false;
-                console.log('🔄 Touch scroll reactivado');
             }, 1500);
         }
 
@@ -301,11 +286,10 @@ function updateActiveSlide(index) {
         dot.classList.toggle('active', i === index);
     });
 
-  // En updateActiveSlide()
-const footer = document.getElementById('mainFooter');
-if (footer) {
-    footer.classList.toggle('visible', index === 4); // ← Cambia 3 por 4 si quieres que se muestre en Contacto
-}
+    const footer = document.getElementById('mainFooter');
+    if (footer) {
+        footer.classList.toggle('visible', index === 4);
+    }
 
     const event = new CustomEvent('slide:changed', {
         detail: { index: index }
@@ -334,31 +318,79 @@ function initStepIndicators() {
     });
 }
 
-/* ========================================================
-   INICIALIZA BOTONES DE ACCIÓN
-   ======================================================== */
 function initButtons() {
+    // ========================================
+    // FUNCION REUTILIZABLE PARA WHATSAPP
+    // ========================================
+    function openWhatsApp(phoneNumber, customMessage) {
+        const cleanNumber = phoneNumber.replace(/\D/g, '');
+        const defaultMessage = 'Hola, vi su informacion de contacto en SHEKINAH Logistics y me gustaria obtener mas informacion.';
+        const message = customMessage || defaultMessage;
+        const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    }
+
+    // ========================================
+    // BOTON CTA - WHATSAPP
+    // ========================================
     const ctaBtn = document.querySelector('.btn-cta');
     if (ctaBtn) {
         ctaBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            showToast('🚢 Solicitud de cotización enviada. Te contactaremos pronto.');
+            openWhatsApp('5563532420', 'Hola, estoy interesado en solicitar una cotizacion para ruta de comercio exterior.');
         });
     }
 
+    // ========================================
+    // TODOS LOS NUMEROS DE TELEFONO EN CONTACTOS
+    // ========================================
+    const whatsappLinks = document.querySelectorAll('.whatsapp-link');
+    whatsappLinks.forEach(link => {
+        link.removeEventListener('click', handleWhatsAppClick);
+        link.addEventListener('click', handleWhatsAppClick);
+    });
+
+    function handleWhatsAppClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const phoneNumber = this.dataset.phone;
+        if (phoneNumber) {
+            openWhatsApp(phoneNumber);
+        }
+    }
+
+    const telLinks = document.querySelectorAll('a[href^="tel:"]');
+    telLinks.forEach(link => {
+        link.removeEventListener('click', handleTelClick);
+        link.addEventListener('click', handleTelClick);
+    });
+
+    function handleTelClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const href = this.getAttribute('href');
+        const phoneNumber = href.replace('tel:', '').replace(/\+/g, '').replace(/\s/g, '');
+        if (phoneNumber) {
+            openWhatsApp(phoneNumber);
+        }
+    }
+
+    // ========================================
+    // OTROS BOTONES DE ACCION
+    // ========================================
     const actionButtons = document.querySelectorAll('[data-action]');
     actionButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const action = btn.dataset.action;
             const messages = {
-                'conocer-mas': '🔍 Redirigiendo a más información...',
-                'contactar': '📞 Abriendo formulario de contacto...',
-                'rutas-sostenibles': '🌿 Mostrando rutas sostenibles...',
-                'informe-impacto': '📊 Generando informe de impacto...',
-                'cotizar': '🚢 Solicitud de cotización enviada. Te contactaremos pronto.'
+                'conocer-mas': 'Redirigiendo a mas informacion...',
+                'contactar': 'Abriendo formulario de contacto...',
+                'rutas-sostenibles': 'Mostrando rutas sostenibles...',
+                'informe-impacto': 'Generando informe de impacto...',
+                'cotizar': 'Solicitud de cotizacion enviada. Te contactaremos pronto.'
             };
-            showToast(messages[action] || `Acción: ${action}`);
+            showToast(messages[action] || `Accion: ${action}`);
         });
     });
 }
@@ -371,7 +403,6 @@ function initThreeJs() {
     threeInitialized = true;
 
     if (typeof THREE === 'undefined') {
-        console.warn('Three.js no está cargado, cargando...');
         loadThreeJs();
         return;
     }
@@ -383,16 +414,14 @@ function loadThreeJs() {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
     script.onload = () => {
-        console.log('✅ Three.js cargado');
         createGlobe();
     };
     script.onerror = () => {
-        console.error('❌ Error cargando Three.js');
         const container = document.getElementById('three-canvas');
         if (container) {
             container.innerHTML = `
                 <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#3e92cc;font-family:'Hanken Grotesk',sans-serif;font-size:1.2rem;opacity:0.3;">
-                    <span>🌍 Cargando planeta...</span>
+                    <span>Cargando planeta...</span>
                 </div>
             `;
         }
@@ -407,7 +436,6 @@ function createGlobe() {
     container.innerHTML = '';
 
     if (typeof THREE === 'undefined') {
-        console.error('❌ Three.js no disponible');
         return;
     }
 
@@ -553,7 +581,6 @@ function createGlobe() {
 
     animate();
     threeInitialized = true;
-    console.log('✅ Planeta 3D creado');
 }
 
 /* ========================================================

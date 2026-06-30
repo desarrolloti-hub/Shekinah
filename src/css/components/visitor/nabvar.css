@@ -44,19 +44,19 @@
   gap: 16px;
 }
 
-/* Contenedor del logo */
+/* Contenedor del logo - AUMENTADO */
 .shekinah-logo-container {
   display: flex;
   align-items: center;
-  height: 50px;
+  height: 64px;
   width: auto;
 }
 
-/* Logo SVG - en blanco */
+/* Logo SVG - Color --shekinah-accent-light: #7AC6E6 */
 .shekinah-logo {
   height: 100%;
   width: auto;
-  filter: brightness(0) saturate(100%) invert(1);
+  filter: brightness(0) saturate(100%) invert(80%) sepia(38%) saturate(1039%) hue-rotate(169deg) brightness(96%) contrast(89%);
   transition: transform 0.3s ease, filter 0.3s ease;
   display: block;
 }
@@ -269,9 +269,8 @@
     display: none;
   }
 
-  /* Ajuste del logo en móvil */
   .shekinah-logo-container {
-    height: 40px;
+    height: 50px;
   }
 
   .shekinah-avatar {
@@ -305,9 +304,8 @@
     font-size: 24px;
   }
 
-  /* Ajuste del logo en móvil pequeño */
   .shekinah-logo-container {
-    height: 32px;
+    height: 40px;
   }
 
   .shekinah-avatar {

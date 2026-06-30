@@ -20,12 +20,10 @@ export function initShekinahNavbar() {
     cacheElements();
     
     if (!elements.navbar) {
-      console.warn('⚠️ Shekinah Navbar no encontrado');
       return;
     }
 
     if (state.isInitialized) {
-      console.log('ℹ️ Shekinah Navbar ya inicializado');
       return;
     }
 
@@ -34,9 +32,8 @@ export function initShekinahNavbar() {
     handleScroll();
 
     state.isInitialized = true;
-    console.log('✅ Shekinah Navbar Controller inicializado con step indicators');
   }).catch(error => {
-    console.error('❌ Error esperando navbar:', error);
+    // Error silencioso
   });
 }
 
@@ -50,7 +47,6 @@ function waitForNavbar(maxAttempts = 30, interval = 100) {
     const checkNavbar = () => {
       const navbar = document.getElementById('shekinahNavbar');
       if (navbar) {
-        console.log('✅ Shekinah Navbar encontrado en el DOM');
         resolve();
       } else {
         attempts++;
@@ -87,7 +83,7 @@ function cacheElements() {
    VINCULA EVENTOS
    ======================================== */
 function bindEvents() {
-  // Menú móvil
+  // Menu movil
   if (elements.menuToggle && elements.mobileMenu) {
     const newToggle = elements.menuToggle.cloneNode(true);
     if (elements.menuToggle.parentNode) {
@@ -97,7 +93,7 @@ function bindEvents() {
     elements.menuToggle.addEventListener('click', toggleMobileMenu);
   }
 
-  // Scroll - animación de cambio de color
+  // Scroll - animacion de cambio de color
   window.addEventListener('scroll', handleScroll, { passive: true });
 
   // Sincronizar con step indicators - USANDO requestAnimationFrame
@@ -115,7 +111,7 @@ function bindEvents() {
     container.addEventListener('scroll', syncHandler, { passive: true });
   }
 
-  // Cerrar menú al hacer clic en enlaces
+  // Cerrar menu al hacer clic en enlaces
   if (elements.navLinks) {
     elements.navLinks.forEach(link => {
       link.removeEventListener('click', handleNavClick);
@@ -130,7 +126,7 @@ function bindEvents() {
     });
   }
 
-  // Click fuera del menú
+  // Click fuera del menu
   document.addEventListener('click', handleClickOutside);
 
   // Evento resize
@@ -152,7 +148,6 @@ function bindEvents() {
 function syncWithStepIndicators() {
   const container = document.getElementById('scrollContainer');
   if (!container) {
-    console.warn('⚠️ scrollContainer no encontrado');
     return;
   }
 
@@ -182,12 +177,11 @@ function updateStepDots(index) {
 }
 
 /* ========================================
-   NAVEGACIÓN A SLIDE
+   NAVEGACION A SLIDE
    ======================================== */
 function goToSlide(index) {
   const container = document.getElementById('scrollContainer');
   if (!container) {
-    console.warn('⚠️ scrollContainer no encontrado');
     return;
   }
 
@@ -234,7 +228,7 @@ function updateActiveNavLink(index) {
 }
 
 /* ========================================
-   MENÚ MÓVIL
+   MENU MOVIL
    ======================================== */
 function toggleMobileMenu() {
   if (!elements.mobileMenu || !elements.menuToggle) return;
@@ -295,7 +289,7 @@ function handleScroll() {
 }
 
 /* ========================================
-   MANEJA CLICK FUERA DEL MENÚ
+   MANEJA CLICK FUERA DEL MENU
    ======================================== */
 function handleClickOutside(event) {
   if (!state.isMenuOpen) return;
@@ -326,7 +320,6 @@ export function reinitializeShekinahNavbar() {
   bindEvents();
   syncWithStepIndicators();
   handleScroll();
-  console.log('🔄 Shekinah Navbar re-inicializado');
 }
 
 /* ========================================

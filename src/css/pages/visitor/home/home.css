@@ -108,8 +108,12 @@ body {
    SLIDE CONTENT - TODOS EN MISMA POSICIÓN
    ======================================================== */
 
+/* ========================================================
+   SLIDE CONTENT - TODOS EN MISMA POSICIÓN
+   ======================================================== */
+
 .slide-content {
-  position: absolute !important; /* ← Absoluto para que todos estén en la misma posición */
+  position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
@@ -123,8 +127,16 @@ body {
   pointer-events: none;
   transition: opacity var(--shekinah-transition-slow, 0.6s ease);
   box-sizing: border-box !important;
-    transform: translateY(-15%) !important; /* ← AÑADE ESTA LÍNEA */
+  /* 🔥 CAMBIA ESTO: en lugar de translateY(-15%), usa un pequeño ajuste */
+  transform: translateY(-5%) !important; /* ← Cambiado de -15% a -5% */
 }
+
+/* Para el slide 0, 1, 2, 3, 4 - ajustes individuales si es necesario */
+.slide-content[data-slide="0"] { transform: translateY(-8%) !important; }
+.slide-content[data-slide="1"] { transform: translateY(-5%) !important; }
+.slide-content[data-slide="2"] { transform: translateY(-5%) !important; }
+.slide-content[data-slide="3"] { transform: translateY(-3%) !important; }
+.slide-content[data-slide="4"] { transform: translateY(-3%) !important; }
 
 .slide-content.active {
   opacity: 1;
@@ -2461,4 +2473,65 @@ body {
     position: relative;
     cursor: default;
     touch-action: none; /* ← IMPORTANTE para táctil */
+}
+/* ========================================================
+   CONTACTOS CLICKEABLES - MEJORAS VISUALES
+   ======================================================== */
+
+.contact-item a {
+    color: inherit !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: var(--shekinah-accent-light, #7AC6E6) !important;
+    text-decoration: underline !important;
+}
+
+.contact-item a[href^="tel:"]:hover {
+    color: #4CAF50 !important;
+}
+
+.contact-item a[href^="mailto:"]:hover {
+    color: #FF6B6B !important;
+}
+/* ========================================================
+   CONTACTOS CLICKEABLES
+   ======================================================== */
+
+.contact-link-item {
+    color: var(--shekinah-text-secondary, rgba(255,255,255,0.75)) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.78rem;
+    cursor: pointer;
+}
+
+.contact-link-item:hover {
+    color: var(--shekinah-accent-light, #7AC6E6) !important;
+    text-decoration: underline !important;
+}
+
+/* Colores específicos al pasar el mouse */
+.contact-link-item[href^="tel:"]:hover {
+    color: #4CAF50 !important;
+}
+
+.contact-link-item[href^="mailto:"]:hover {
+    color: #FF6B6B !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .contact-link-item {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 550px) {
+    .contact-link-item {
+        font-size: 0.6rem;
+    }
 }
