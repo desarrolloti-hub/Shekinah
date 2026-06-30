@@ -3,7 +3,7 @@
    CONTROLADOR PARA HOME CON SCROLL VIRTUAL
    - Sin scroll nativo (overflow: hidden)
    - Cambio de slides con eventos de rueda/tactil
-   - Todas las tarjetas en la misma posicion fija
+   - CORREGIDO PARA MÓVIL
    ======================================================== */
 
 let currentSlide = 0;
@@ -15,10 +15,11 @@ let isAutoSliding = true;
 let isUserInteracting = false;
 let isScrolling = false;
 
-// Variables para control tactil
+// Variables para control táctil
 let touchStartY = 0;
 let touchEndY = 0;
 let isSwiping = false;
+let touchActive = false;
 
 /* ========================================================
    FUNCION PRINCIPAL - EXPORTADA
@@ -40,7 +41,7 @@ export async function homeController() {
     // Iniciar auto-slide DESPUES de que termine la animacion
     setTimeout(() => {
         startAutoSlide();
-    }, 5000); // Esperar a que termine la animacion (~4.5s + margen)
+    }, 5000);
 
     // ESCUCHAR NAVEGACION DESDE EL NAVBAR
     document.addEventListener('navigate:toSlide', (e) => {
@@ -67,10 +68,8 @@ function initSplashAnimation() {
         return;
     }
 
-    // Cuando termina la animacion del avion
     if (avion) {
         avion.addEventListener('animationend', function() {
-            // Anadir la clase 'sweeping' para activar el barrido diagonal de la mascara
             if (!splash.classList.contains('sweeping')) {
                 splash.classList.add('sweeping');
             }
@@ -78,16 +77,14 @@ function initSplashAnimation() {
             setTimeout(() => {
                 splash.classList.add('hidden');
                 document.dispatchEvent(new CustomEvent('splash:completed'));
-            }, 2200); // Tiempo para que el barrido se complete
+            }, 2200);
         });
     }
 
-    // Tambien iniciamos el barrido despues de un tiempo fijo (por si la animacion del avion falla)
     setTimeout(() => {
         splash.classList.add('sweeping');
-    }, 3500); // Ajustado para dar tiempo a que el logo se muestre
+    }, 3500);
 
-    // Timeout de seguridad final
     setTimeout(() => {
         if (!splash.classList.contains('hidden')) {
             splash.classList.add('sweeping');
@@ -135,12 +132,16 @@ function initScrollDetection() {
     let scrollDirection = 0;
     let lastWheelTime = 0;
 
-    // Escuchar en el documento completo, sin filtros
+    // Escuchar en el documento completo
     document.addEventListener('wheel', (e) => {
-        e.preventDefault();
+        // No prevenir default en móviles con touchpad
+        // Solo prevenir si es realmente un scroll de escritorio
+        if (!e.touches) {
+            e.preventDefault();
+        }
 
         const now = Date.now();
-        if (now - lastWheelTime < 800) return; // Debounce
+        if (now - lastWheelTime < 800) return;
         lastWheelTime = now;
 
         if (isScrolling) return;
@@ -216,60 +217,142 @@ function initScrollDetection() {
 }
 
 /* ========================================================
-   DETECCION TACTIL PARA MOVIL
+   DETECCION TACTIL PARA MOVIL - CORREGIDA
    ======================================================== */
 function initTouchDetection() {
-    const container = document.getElementById('scrollContainer');
-    if (!container) return;
+    // Usar el body como capturador de eventos táctiles
+    const target = document.body;
+    
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isSwiping = false;
+    let touchTimeout = null;
 
-    container.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
+    // Prevenir scroll nativo en todo el body
+    target.addEventListener('touchmove', (e) => {
+        // Solo prevenir si estamos dentro del área de la app
+        if (e.target.closest('.home-main') || e.target.closest('#scrollContainer')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Touch start - capturar posición inicial
+    target.addEventListener('touchstart', (e) => {
+        // Solo procesar toques dentro del área de la app
+        if (!e.target.closest('.home-main') && !e.target.closest('#scrollContainer')) {
+            return;
+        }
+        
+        const touch = e.touches[0];
+        touchStartY = touch.clientY;
+        touchStartX = touch.clientX;
         isSwiping = false;
+        touchActive = true;
+        
+        // Detener auto-slide durante interacción táctil
+        isUserInteracting = true;
+        
+        // Limpiar timeout anterior
+        if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+        }
     }, { passive: true });
 
-    container.addEventListener('touchmove', (e) => {
-        e.preventDefault();
+    // Touch move - detectar deslizamiento vertical
+    target.addEventListener('touchmove', (e) => {
+        // Solo procesar toques dentro del área de la app
+        if (!e.target.closest('.home-main') && !e.target.closest('#scrollContainer')) {
+            return;
+        }
+        
+        if (isScrolling || !touchActive) return;
 
-        if (isScrolling) return;
+        const touch = e.touches[0];
+        const deltaY = touchStartY - touch.clientY;
+        const deltaX = Math.abs(touchStartX - touch.clientX);
 
-        const touchY = e.touches[0].clientY;
-        const deltaY = touchStartY - touchY;
+        // Si es movimiento horizontal, ignorar (para no interferir con otros gestos)
+        if (deltaX > 30) {
+            return;
+        }
 
+        // Umbral mínimo de 30px para considerar un swipe
         if (Math.abs(deltaY) < 30) return;
 
+        // Marcar como swipe
         isSwiping = true;
 
         let nextSlide = currentSlide;
 
         if (deltaY > 0) {
+            // Deslizar hacia arriba → siguiente slide
             nextSlide = currentSlide + 1;
         } else if (deltaY < 0) {
+            // Deslizar hacia abajo → slide anterior
             nextSlide = currentSlide - 1;
         }
 
+        // Validar límites
         if (nextSlide < 0) nextSlide = 0;
         if (nextSlide >= totalSlides) nextSlide = totalSlides - 1;
 
         if (nextSlide !== currentSlide) {
             isScrolling = true;
-            isUserInteracting = true;
-
+            
+            // Bloquear auto-slide temporalmente
+            isAutoSliding = false;
+            
             goToSlide(nextSlide);
 
+            // Reactivar auto-slide después de un tiempo
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
+                isAutoSliding = true;
                 isUserInteracting = false;
             }, 1500);
         }
 
-        touchStartY = touchY;
+        // Actualizar punto de referencia para evitar múltiples cambios
+        touchStartY = touch.clientY;
 
     }, { passive: false });
 
-    container.addEventListener('touchend', (e) => {
+    // Touch end - resetear estados
+    target.addEventListener('touchend', (e) => {
+        if (!touchActive) return;
+        touchActive = false;
+        
+        // Si no hubo swipe, resetear usuario interactivo después de un tiempo
+        if (!isSwiping) {
+            touchTimeout = setTimeout(() => {
+                isUserInteracting = false;
+            }, 3000);
+        }
+        
         isSwiping = false;
+        
+        // Reactivar auto-slide si no está activo
+        if (!isAutoSliding && !isScrolling) {
+            setTimeout(() => {
+                isAutoSliding = true;
+                isUserInteracting = false;
+            }, 2000);
+        }
     }, { passive: true });
+
+    // También escuchar en el contenedor específico
+    const container = document.getElementById('scrollContainer');
+    if (container) {
+        container.addEventListener('touchstart', (e) => {
+            // No hacer nada, ya lo maneja el body
+        }, { passive: true });
+        
+        container.addEventListener('touchmove', (e) => {
+            // No hacer nada, ya lo maneja el body
+        }, { passive: false });
+    }
 }
 
 /* ========================================================
@@ -307,11 +390,13 @@ function initStepIndicators() {
         dot.addEventListener('click', () => {
             isUserInteracting = true;
             isScrolling = true;
+            isAutoSliding = false;
 
             goToSlide(index);
 
             setTimeout(() => {
                 isScrolling = false;
+                isAutoSliding = true;
                 isUserInteracting = false;
             }, 1500);
         });
@@ -627,13 +712,6 @@ export function cleanupHome() {
     if (autoSlideInterval) {
         clearInterval(autoSlideInterval);
         autoSlideInterval = null;
-    }
-
-    const container = document.getElementById('scrollContainer');
-    if (container) {
-        container.removeEventListener('touchstart', null);
-        container.removeEventListener('touchmove', null);
-        container.removeEventListener('touchend', null);
     }
 
     const toast = document.querySelector('.toast-notification');

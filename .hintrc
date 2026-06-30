@@ -10,7 +10,9 @@
         "ignore": [
           "backdrop-filter",
           "user-select",
-          "-webkit-mask"
+          "-webkit-mask",
+          "-webkit-text-size-adjust",
+          "-moz-appearance"
         ]
       }
     ],

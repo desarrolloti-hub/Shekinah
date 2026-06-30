@@ -2465,15 +2465,6 @@ body {
         font-size: clamp(1.2rem, 1.2vw, 1.8rem) !important;
     }
 }
-/* En home.css - Agrega esto */
-#scrollContainer {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden !important;
-    position: relative;
-    cursor: default;
-    touch-action: none; /* ← IMPORTANTE para táctil */
-}
 /* ========================================================
    CONTACTOS CLICKEABLES - MEJORAS VISUALES
    ======================================================== */
@@ -2534,4 +2525,52 @@ body {
     .contact-link-item {
         font-size: 0.6rem;
     }
+}
+/* ========================================================
+   SCROLL FANTASMA - MEJORA PARA MÓVIL
+   ======================================================== */
+
+/* Contenedor principal para scroll fantasma */
+/* ========================================================
+   SCROLL FANTASMA - MEJORA PARA MÓVIL
+   ======================================================== */
+
+/* Contenedor principal para scroll fantasma */
+#scrollContainer {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden !important;
+    position: relative;
+    cursor: default;
+    /* ✅ ELIMINAR touch-action: none para permitir detección táctil */
+    touch-action: auto !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ⭐ NUEVO: Overlay invisible para capturar eventos táctiles */
+.shekinah-touch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    touch-action: auto !important; /* ✅ Cambiado a auto */
+    pointer-events: auto !important;
+    cursor: default;
+}
+
+/* ⭐ NUEVO: Overlay invisible para capturar eventos táctiles */
+.shekinah-touch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    touch-action: none !important;
+    pointer-events: auto !important;
+    cursor: default;
 }

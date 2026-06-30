@@ -1,0 +1,113 @@
+<!-- FILE: login.html -->
+<!-- SHEKINAH LOGIN - Pantalla de acceso -->
+<div id="app">
+    <main class="home-main">
+<div id="login-app" class="login-container">
+    <!-- Fondo con gradiente y planeta -->
+    <div class="login-bg">
+        <div class="login-planet-glow"></div>
+        <div class="login-stars"></div>
+    </div>
+
+    <!-- Contenedor principal del login -->
+    <div class="login-wrapper">
+        <!-- Logo -->
+        <div class="login-logo-container">
+            <img src="/assets/img/logoShekinah.svg" alt="SHEKINAH Logistics" class="login-logo">
+            <span class="login-brand">SHEKINAH</span>
+            <span class="login-subtitle">Logistics · Precision in Transit</span>
+        </div>
+
+        <!-- Card de Login -->
+        <div class="login-card">
+            <div class="login-card-header">
+                <h2>Bienvenido</h2>
+                <p>Accede a tu panel de control</p>
+                <div class="login-divider"></div>
+            </div>
+
+            <!-- Formulario -->
+            <form class="login-form" id="loginForm" autocomplete="off">
+                <!-- Campo: Usuario/Email -->
+                <div class="login-field">
+                    <div class="login-field-icon">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="login-field-input">
+                        <input 
+                            type="text" 
+                            id="loginUser" 
+                            placeholder=" " 
+                            required
+                            autocomplete="username"
+                        >
+                        <label for="loginUser">Usuario o Email</label>
+                    </div>
+                </div>
+
+                <!-- Campo: Contraseña -->
+                <div class="login-field">
+                    <div class="login-field-icon">
+                        <span class="material-symbols-outlined">lock</span>
+                    </div>
+                    <div class="login-field-input">
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            placeholder=" " 
+                            required
+                            autocomplete="current-password"
+                        >
+                        <label for="loginPassword">Contraseña</label>
+                    </div>
+                    <button type="button" class="login-password-toggle" id="togglePassword">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </div>
+
+                <!-- Opciones: Recordar y Olvidé -->
+                <div class="login-options">
+                    <label class="login-checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="login-checkmark"></span>
+                        Recordarme
+                    </label>
+                    <a href="#" class="login-forgot">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <!-- Botón de acceso -->
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="login-btn-text">Acceder</span>
+                    <span class="login-btn-loader" id="loginLoader" style="display:none;">
+                        <span class="loader-spinner"></span>
+                    </span>
+                </button>
+
+                <!-- Separador -->
+                <div class="login-separator">
+                    <span>¿No tienes cuenta?</span>
+                </div>
+
+                <!-- Botón de registro -->
+                <button type="button" class="login-btn-register" id="registerBtn">
+                    Crear cuenta nueva
+                </button>
+            </form>
+
+            <!-- Mensaje de error -->
+            <div class="login-error" id="loginError" style="display:none;">
+                <span class="material-symbols-outlined">error_outline</span>
+                <span id="loginErrorMessage">Credenciales incorrectas</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span>© 2024 SHEKINAH Logistics · Precision in Transit</span>
+            <div class="login-footer-links">
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Términos de Uso</a>
+            </div>
+        </div>
+    </div>
+</div>

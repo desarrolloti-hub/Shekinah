@@ -4,9 +4,13 @@
    ======================================== */
 
 @import url('./base/variables.css');
+@import url('./base/reset.css');
+
 /* Pages */
 @import url('./pages/visitor/home/home.css');
 
 @import url('./components/visitor/nabvar.css');
-@import url('./components/visitor/planet.css')
+@import url('./components/visitor/planet.css');
 /* Si tienes otros archivos, agrégalos aquí */
+
+@import url('./pages/visitor/login/login.css');

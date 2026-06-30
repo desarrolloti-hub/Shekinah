@@ -1,0 +1,234 @@
+/* FILE: reset.css */
+/* SHEKINAH - Reset específico para control de espacios y layout */
+
+/* ========================================================
+   RESET DE MÁRGENES Y PADDINGS
+   ======================================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================================
+   BODY - SIN SCROLL Y CON PADDING PARA NAVBAR
+   ======================================================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* ← Evita scroll nativo */
+    background: #000c14;
+    font-family: 'Work Sans', sans-serif;
+    color: #ffffff;
+}
+
+body {
+    padding-top: 80px !important; /* ← Espacio para el navbar */
+    margin: 0 !important;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ========================================================
+   CONTENEDOR PRINCIPAL DE LA APP
+   ======================================================== */
+
+#app {
+    width: 100%;
+    height: calc(100vh - 80px) !important; /* ← Resta el navbar */
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ========================================================
+   CONTENEDOR DE PÁGINAS - SIN OVERFLOW
+   ======================================================== */
+
+.page-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ========================================================
+   NAVBAR - FIJO EN LA PARTE SUPERIOR
+   ======================================================== */
+
+.shekinah-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1050;
+    background: rgba(2, 43, 58, 0.7);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(31, 122, 140, 0.4);
+}
+
+/* ========================================================
+   CONTENIDO - RESPETA EL NAVBAR
+   ======================================================== */
+
+.main-content {
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+    position: relative;
+    margin-top: 80px; /* ← Empuja el contenido debajo del navbar */
+}
+
+/* ========================================================
+   HOME - CONTENEDOR PRINCIPAL
+   ======================================================== */
+
+.home-main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background: var(--shekinah-bg-primary, #0b0f1a);
+}
+
+/* ========================================================
+   RESPONSIVE - AJUSTAR ALTURAS
+   ======================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    body {
+        padding-top: 70px !important;
+    }
+
+    .shekinah-header {
+        height: 70px;
+    }
+
+    #app {
+        height: calc(100vh - 70px) !important;
+    }
+
+    .main-content {
+        height: calc(100vh - 70px);
+        margin-top: 70px;
+    }
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px !important;
+    }
+
+    .shekinah-header {
+        height: 60px;
+    }
+
+    #app {
+        height: calc(100vh - 60px) !important;
+    }
+
+    .main-content {
+        height: calc(100vh - 60px);
+        margin-top: 60px;
+    }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px !important;
+    }
+
+    .shekinah-header {
+        height: 60px;
+    }
+
+    #app {
+        height: calc(100vh - 60px) !important;
+    }
+
+    .main-content {
+        height: calc(100vh - 60px);
+        margin-top: 60px;
+    }
+}
+
+/* ========================================================
+   UTILIDADES - CLASES DE AYUDA
+   ======================================================== */
+
+/* Contenedor que respeta el navbar */
+.content-with-nav {
+    padding-top: 80px;
+    min-height: 100vh;
+}
+
+/* Contenedor sin overflow */
+.no-overflow {
+    overflow: hidden;
+}
+
+/* Altura completa menos navbar */
+.full-height-minus-nav {
+    height: calc(100vh - 80px);
+}
+
+/* Scroll interno (si se necesita) */
+.scrollable-content {
+    overflow-y: auto;
+    height: calc(100vh - 80px);
+    scroll-behavior: smooth;
+}
+
+/* Ocultar scrollbar pero mantener funcionalidad */
+.scrollable-content::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.scrollable-content {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* ========================================================
+   RESPONSIVE - UTILIDADES
+   ======================================================== */
+
+@media (max-width: 1024px) {
+    .content-with-nav {
+        padding-top: 70px;
+    }
+
+    .full-height-minus-nav {
+        height: calc(100vh - 70px);
+    }
+
+    .scrollable-content {
+        height: calc(100vh - 70px);
+    }
+}
+
+@media (max-width: 768px) {
+    .content-with-nav {
+        padding-top: 60px;
+    }
+
+    .full-height-minus-nav {
+        height: calc(100vh - 60px);
+    }
+
+    .scrollable-content {
+        height: calc(100vh - 60px);
+    }
+}

@@ -65,11 +65,15 @@
   transform: scale(1.05);
 }
 
+/* ============================================
+   MENÚ HAMBURGUESA (visible solo en móvil)
+   ============================================ */
+
 .shekinah-menu-icon {
   color: rgba(255, 255, 255, 0.9);
   font-size: 28px;
   cursor: pointer;
-  display: none;
+  display: none; /* Oculto por defecto en escritorio */
   transition: transform 0.3s ease;
   user-select: none;
 }
@@ -79,13 +83,13 @@
 }
 
 /* ============================================
-   NAVEGACIÓN CENTRAL
+   NAVEGACIÓN CENTRAL (visible en escritorio)
    ============================================ */
 
 .shekinah-main-nav {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
 }
 
 .shekinah-nav-link {
@@ -183,7 +187,7 @@
 }
 
 /* ============================================
-   MENÚ MÓVIL
+   MENÚ MÓVIL (oculto por defecto)
    ============================================ */
 
 .shekinah-mobile-menu {
@@ -261,12 +265,14 @@
     padding: 0 20px;
   }
 
+  /* ⭐ MOSTRAMOS el ícono de hamburguesa en móvil */
   .shekinah-menu-icon {
     display: block;
   }
 
+  /* ⭐ OCULTAMOS la navegación central en móvil */
   .shekinah-main-nav {
-    display: none;
+    display: none !important;
   }
 
   .shekinah-logo-container {
@@ -330,21 +336,5 @@
   .shekinah-menu-overlay {
     top: 60px;
     height: calc(100vh - 60px);
-  }
-}
-/* ============================================
-   NAVEGACIÓN CENTRAL
-   ============================================ */
-
-.shekinah-main-nav {
-  display: flex;
-  align-items: center;
-  gap: 32px; /* ← Reducido de 40px a 32px para que quepan 5 */
-}
-
-/* Si quieres mantener el mismo ancho, puedes reducir más */
-@media (max-width: 1024px) {
-  .shekinah-main-nav {
-    gap: 20px;
   }
 }
