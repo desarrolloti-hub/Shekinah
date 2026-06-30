@@ -147,22 +147,10 @@ function bindEvents() {
    ======================================== */
 function syncWithStepIndicators() {
   const container = document.getElementById('scrollContainer');
-  if (!container) {
-    return;
-  }
+  if (!container) return;
 
-  const scrollTop = container.scrollTop;
-  const viewportHeight = window.innerHeight;
-  const currentSlide = Math.round(scrollTop / viewportHeight);
-
-  const totalSlides = elements.stepDots.length || 4;
-  const safeIndex = Math.max(0, Math.min(currentSlide, totalSlides - 1));
-  
-  if (safeIndex !== state.currentSlide && !isNaN(safeIndex)) {
-    state.currentSlide = safeIndex;
-    updateActiveNavLink(safeIndex);
-    updateStepDots(safeIndex);
-  }
+  // Obtener el slide actual desde el homeController
+  // Usamos el evento slide:changed para mantener sincronizado
 }
 
 /* ========================================
@@ -177,29 +165,26 @@ function updateStepDots(index) {
 }
 
 /* ========================================
-   NAVEGACION A SLIDE
+   NAVEGACIÓN A SLIDE - MEJORADA
    ======================================== */
 function goToSlide(index) {
-  const container = document.getElementById('scrollContainer');
-  if (!container) {
-    return;
-  }
+  // Validar que el índice existe
+  const totalSlides = elements.stepDots.length || 5;
+  if (index < 0 || index >= totalSlides) return;
 
-  // Desactivar auto-slide temporalmente
-  const event = new CustomEvent('navigate:toSlide', { detail: { index } });
+  // Disparar evento para el homeController
+  const event = new CustomEvent('navigate:toSlide', { 
+    detail: { index: index } 
+  });
   document.dispatchEvent(event);
 
-  const viewportHeight = window.innerHeight;
-  container.scrollTo({
-    top: index * viewportHeight,
-    behavior: 'smooth'
-  });
-
+  // Actualizar estado local
   state.currentSlide = index;
   updateActiveNavLink(index);
   updateStepDots(index);
   closeMobileMenu();
 }
+
 
 /* ========================================
    MANEJA CLICK EN ENLACES DEL NAV

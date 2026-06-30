@@ -332,3 +332,19 @@
     height: calc(100vh - 60px);
   }
 }
+/* ============================================
+   NAVEGACIÓN CENTRAL
+   ============================================ */
+
+.shekinah-main-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* ← Reducido de 40px a 32px para que quepan 5 */
+}
+
+/* Si quieres mantener el mismo ancho, puedes reducir más */
+@media (max-width: 1024px) {
+  .shekinah-main-nav {
+    gap: 20px;
+  }
+}
