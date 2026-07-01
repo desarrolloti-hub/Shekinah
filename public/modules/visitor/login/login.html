@@ -1,25 +1,17 @@
 <!-- FILE: login.html -->
-<!-- SHEKINAH LOGIN - Pantalla de acceso -->
-<div id="app">
-    <main class="home-main">
-<div id="login-app" class="login-container">
-    <!-- Fondo con gradiente y planeta -->
-    <div class="login-bg">
-        <div class="login-planet-glow"></div>
-        <div class="login-stars"></div>
-    </div>
+<!-- SHEKINAH LOGIN - Pantalla de acceso con Planeta 3D -->
+
+<div class="login-page">
+    <!-- Contenedor del planeta 3D -->
+    <div id="login-three-canvas" class="login-planet-container"></div>
+    
+    <!-- Glow decorativo -->
+    <div class="login-glow"></div>
 
     <!-- Contenedor principal del login -->
     <div class="login-wrapper">
-        <!-- Logo -->
-        <div class="login-logo-container">
-            <img src="/assets/img/logoShekinah.svg" alt="SHEKINAH Logistics" class="login-logo">
-            <span class="login-brand">SHEKINAH</span>
-            <span class="login-subtitle">Logistics · Precision in Transit</span>
-        </div>
-
-        <!-- Card de Login -->
-        <div class="login-card">
+        <!-- Card de Login (sin logo) -->
+        <div class="login-card shekinah-glass-card">
             <div class="login-card-header">
                 <h2>Bienvenido</h2>
                 <p>Accede a tu panel de control</p>

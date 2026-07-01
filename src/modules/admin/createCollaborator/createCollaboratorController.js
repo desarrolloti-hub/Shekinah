@@ -1,9 +1,9 @@
-/* FILE: loginPlanet.js */
-/* SHEKINAH - Planeta 3D para la pantalla de Login */
+/* FILE: createCollaboratorPlanet.js */
+/* SHEKINAH - Planeta 3D para la pantalla de Crear Colaborador */
 
 let planetInitialized = false;
 
-export function initLoginPlanet() {
+export function initCreateCollaboratorPlanet() {
     if (planetInitialized) return;
     planetInitialized = true;
 
@@ -12,29 +12,29 @@ export function initLoginPlanet() {
         return;
     }
 
-    createLoginGlobe();
+    createCollaboratorGlobe();
 }
 
 function loadThreeJs() {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
     script.onload = () => {
-        createLoginGlobe();
+        createCollaboratorGlobe();
     };
     script.onerror = () => {
-        console.warn('⚠️ Three.js no pudo cargarse para el login');
+        console.warn('⚠️ Three.js no pudo cargarse para crear colaborador');
     };
     document.head.appendChild(script);
 }
 
-function createLoginGlobe() {
-    const container = document.getElementById('login-three-canvas');
+function createCollaboratorGlobe() {
+    const container = document.getElementById('create-collaborator-three-canvas');
     if (!container) return;
 
     container.innerHTML = '';
 
     if (typeof THREE === 'undefined') {
-        console.warn('⚠️ Three.js no disponible para el login');
+        console.warn('⚠️ Three.js no disponible para crear colaborador');
         return;
     }
 

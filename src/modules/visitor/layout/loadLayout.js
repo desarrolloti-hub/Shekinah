@@ -8,32 +8,20 @@
  * @returns {Promise<Object>} - Retorna las rutas de los layouts cargados
  */
 export async function loadLayout() {
-    // Usa rutas relativas desde la raíz del proyecto
-    const [navbarHTML, footerHTML] = await Promise.all([
-        fetch('/modules/visitor/layout/navbar.html').then(r => {
+    // Solo cargamos el navbar, el footer se carga dinámicamente
+    const navbarHTML = await fetch('/modules/visitor/layout/navbar.html')
+        .then(r => {
             if (!r.ok) throw new Error('Error cargando navbar');
             return r.text();
-        }),
-        fetch('/modules/visitor/layout/footer.html').then(r => {
-            if (!r.ok) throw new Error('Error cargando footer');
-            return r.text();
-        })
-    ]);
+        });
 
-    // Insertar en el DOM
     const navbarContainer = document.getElementById('navbar');
-    const footerContainer = document.getElementById('footer');
-    
     if (navbarContainer) {
         navbarContainer.innerHTML = navbarHTML;
-    }
-    
-    if (footerContainer) {
-        footerContainer.innerHTML = footerHTML;
     }
 
     return {
         navbarLoaded: true,
-        footerLoaded: true
+        footerLoaded: false // El footer se carga bajo demanda
     };
 }

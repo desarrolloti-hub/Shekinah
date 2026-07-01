@@ -1,77 +1,98 @@
-/* FILE: login.css */
-/* SHEKINAH LOGIN - Estilos premium */
-
-/* FILE: login.css - ACTUALIZADO */
-/* SHEKINAH LOGIN - Estilos premium */
-
 /* ========================================================
-   CONTENEDOR PRINCIPAL - CON ESPACIO PARA NAVBAR
+   FILE: login.css
+   SHEKINAH LOGIN - Diseño Premium con Planeta 3D
    ======================================================== */
 
-.login-container {
-    width: 100%;
-    height: 100%;
+/* ========================================================
+   CONTENEDOR PRINCIPAL
+   ======================================================== */
+
+.login-page {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: var(--shekinah-bg-primary, #000c14);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at 30% 20%, #001e2f, #000c14);
-    overflow: hidden;
     font-family: 'Work Sans', sans-serif;
-    padding-top: 20px; /* ← Pequeño ajuste para centrar mejor */
+    padding-top: 80px; /* ← 🔥 ESPACIO PARA EL NAVBAR */
     box-sizing: border-box;
 }
 
 /* ========================================================
-   FONDO DECORATIVO
+   RESPONSIVE - AJUSTAR PADDING DEL NAVBAR
    ======================================================== */
 
-.login-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
+@media (max-width: 1024px) {
+    .login-page {
+        padding-top: 70px;
+    }
 }
 
-.login-planet-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70vmin;
-    height: 70vmin;
-    border-radius: 50%;
-    background: radial-gradient(
-        circle at center,
-        rgba(62, 146, 204, 0.06) 0%,
-        rgba(62, 146, 204, 0.02) 40%,
-        transparent 70%
-    );
-    filter: blur(40px);
-    animation: loginGlowPulse 8s ease-in-out infinite;
+@media (max-width: 768px) {
+    .login-page {
+        padding-top: 60px;
+    }
 }
 
-@keyframes loginGlowPulse {
-    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-}
-
-.login-stars {
-    position: absolute;
-    inset: 0;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.2), transparent);
-    background-size: 200px 100px;
-    background-repeat: repeat;
-    opacity: 0.5;
+@media (max-width: 480px) {
+    .login-page {
+        padding-top: 60px;
+    }
 }
 
 /* ========================================================
-   WRAPPER
+   FONDO CON PLANETA 3D (reutilizando planet.css)
+   ======================================================== */
+
+.login-planet-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    background: radial-gradient(ellipse at center, #0f182a 0%, #080c14 100%);
+}
+
+#login-three-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    background: radial-gradient(ellipse at center, #0f182a 0%, #080c14 100%);
+}
+
+/* ========================================================
+   OVERLAY DE BRILLO (efecto de luz en el planeta)
+   ======================================================== */
+
+.login-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vmin;
+    height: 60vmin;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at center,
+        rgba(62, 146, 204, 0.04) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(20px);
+}
+
+/* ========================================================
+   WRAPPER - CONTENIDO ENCIMA DEL PLANETA
    ======================================================== */
 
 .login-wrapper {
@@ -80,10 +101,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    justify-content: center;
+    gap: 28px;
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
     padding: 20px;
+    animation: loginFadeIn 0.8s ease forwards;
+    margin: auto; /* ← 🔥 Centra verticalmente */
+}
+
+@keyframes loginFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ========================================================
@@ -94,15 +129,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     text-align: center;
+    margin-top: 10px; /* ← 🔥 Pequeño ajuste adicional */
 }
 
 .login-logo {
     height: 64px;
     width: auto;
     filter: brightness(0) saturate(100%) invert(80%) sepia(38%) saturate(1039%) hue-rotate(169deg) brightness(96%) contrast(89%);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
 }
 
 .login-logo:hover {
@@ -111,34 +147,39 @@
 
 .login-brand {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #ffffff;
-    letter-spacing: 4px;
-    margin-top: 4px;
+    letter-spacing: 5px;
+    margin-top: 2px;
+}
+
+.login-brand span {
+    color: var(--shekinah-accent-light, #7AC6E6);
 }
 
 .login-subtitle {
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.4);
-    letter-spacing: 3px;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 4px;
     text-transform: uppercase;
+    font-weight: 400;
 }
 
 /* ========================================================
-   CARD DE LOGIN
+   CARD - Usando clase .shekinah-glass-card de variables.css
    ======================================================== */
 
 .login-card {
     width: 100%;
-    background: rgba(2, 43, 58, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(62, 146, 204, 0.15);
-    border-radius: 16px;
-    padding: 36px 32px 28px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--shekinah-bg-card, rgba(2, 43, 58, 0.75));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--shekinah-border-card, rgba(62, 146, 204, 0.15));
+    border-radius: var(--shekinah-radius-xl, 16px);
+    padding: 36px 34px 30px;
+    box-shadow: var(--shekinah-shadow-lg, 0 30px 80px rgba(0, 0, 0, 0.6));
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
     position: relative;
     overflow: hidden;
 }
@@ -150,8 +191,8 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #3E92CC, transparent);
-    opacity: 0.5;
+    background: linear-gradient(90deg, transparent, var(--shekinah-accent, #3E92CC), transparent);
+    opacity: 0.6;
 }
 
 .login-card:hover {
@@ -170,22 +211,23 @@
 
 .login-card-header h2 {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
     margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
 }
 
 .login-card-header p {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
     margin: 0 0 12px 0;
 }
 
 .login-divider {
     width: 40px;
     height: 2px;
-    background: #3E92CC;
+    background: var(--shekinah-accent, #3E92CC);
     margin: 0 auto;
     border-radius: 2px;
 }
@@ -201,7 +243,7 @@
 }
 
 /* ========================================================
-   CAMPOS DE INPUT
+   CAMPOS DE INPUT - Estilo premium con glass
    ======================================================== */
 
 .login-field {
@@ -209,14 +251,15 @@
     display: flex;
     align-items: center;
     background: rgba(11, 15, 26, 0.5);
-    border: 1px solid rgba(62, 146, 204, 0.12);
-    border-radius: 10px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(62, 146, 204, 0.1);
+    border-radius: var(--shekinah-radius-md, 10px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .login-field:focus-within {
-    border-color: #3E92CC;
-    box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.1);
+    border-color: var(--shekinah-accent, #3E92CC);
+    box-shadow: 0 0 0 4px rgba(62, 146, 204, 0.08);
+    background: rgba(11, 15, 26, 0.7);
 }
 
 .login-field-icon {
@@ -229,12 +272,12 @@
 
 .login-field-icon .material-symbols-outlined {
     font-size: 22px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.25);
     transition: color 0.3s ease;
 }
 
 .login-field:focus-within .login-field-icon .material-symbols-outlined {
-    color: #7AC6E6;
+    color: var(--shekinah-accent-light, #7AC6E6);
 }
 
 .login-field-input {
@@ -276,7 +319,7 @@
 .login-field-input input:not(:placeholder-shown) + label {
     top: 0;
     transform: translateY(-50%) scale(0.75);
-    color: #7AC6E6;
+    color: var(--shekinah-accent-light, #7AC6E6);
     font-weight: 500;
 }
 
@@ -285,7 +328,7 @@
     border: none;
     padding: 0 14px 0 8px;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.25);
     transition: color 0.3s ease;
     display: flex;
     align-items: center;
@@ -293,7 +336,7 @@
 }
 
 .login-password-toggle:hover {
-    color: #7AC6E6;
+    color: var(--shekinah-accent-light, #7AC6E6);
 }
 
 .login-password-toggle .material-symbols-outlined {
@@ -308,7 +351,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 4px 0 4px;
+    margin: 2px 0 4px;
 }
 
 .login-checkbox {
@@ -319,6 +362,11 @@
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     user-select: none;
+    transition: color 0.3s ease;
+}
+
+.login-checkbox:hover {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .login-checkbox input {
@@ -338,8 +386,8 @@
 }
 
 .login-checkbox input:checked + .login-checkmark {
-    background: #3E92CC;
-    border-color: #3E92CC;
+    background: var(--shekinah-accent, #3E92CC);
+    border-color: var(--shekinah-accent, #3E92CC);
 }
 
 .login-checkbox input:checked + .login-checkmark::after {
@@ -350,31 +398,32 @@
 }
 
 .login-checkbox:hover .login-checkmark {
-    border-color: #3E92CC;
+    border-color: var(--shekinah-accent, #3E92CC);
 }
 
 .login-forgot {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.35);
     text-decoration: none;
     transition: color 0.3s ease;
+    font-weight: 400;
 }
 
 .login-forgot:hover {
-    color: #7AC6E6;
+    color: var(--shekinah-accent-light, #7AC6E6);
 }
 
 /* ========================================================
-   BOTONES
+   BOTONES - Usando estilos de buttons.css
    ======================================================== */
 
 .login-btn {
     position: relative;
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #1F7A8C, #3E92CC);
+    background: var(--shekinah-btn-primary-bg, #1F7A8C);
     border: none;
-    border-radius: 10px;
+    border-radius: var(--shekinah-radius-md, 10px);
     font-family: 'Hanken Grotesk', sans-serif;
     font-size: 1rem;
     font-weight: 600;
@@ -387,11 +436,13 @@
     gap: 8px;
     overflow: hidden;
     margin-top: 4px;
+    letter-spacing: 0.5px;
 }
 
 .login-btn:hover {
+    background: var(--shekinah-btn-primary-hover, #2a9bb0);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(62, 146, 204, 0.3);
+    box-shadow: var(--shekinah-shadow-glow, 0 8px 30px rgba(62, 146, 204, 0.3));
 }
 
 .login-btn:active {
@@ -430,12 +481,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 4px 0;
+    margin: 2px 0;
 }
 
 .login-separator span {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.25);
     padding: 0 16px;
     position: relative;
 }
@@ -447,7 +498,7 @@
     top: 50%;
     width: 30px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .login-separator span::before {
@@ -459,27 +510,28 @@
 }
 
 /* ========================================================
-   BOTÓN REGISTRO
+   BOTÓN REGISTRO - Estilo secondary
    ======================================================== */
 
 .login-btn-register {
     width: 100%;
     padding: 12px;
     background: transparent;
-    border: 1px solid rgba(62, 146, 204, 0.2);
-    border-radius: 10px;
+    border: 1px solid rgba(62, 146, 204, 0.15);
+    border-radius: var(--shekinah-radius-md, 10px);
     font-family: 'Work Sans', sans-serif;
     font-size: 0.85rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .login-btn-register:hover {
-    border-color: #3E92CC;
+    border-color: var(--shekinah-accent, #3E92CC);
     color: #ffffff;
     background: rgba(62, 146, 204, 0.05);
+    transform: translateY(-1px);
 }
 
 /* ========================================================
@@ -490,11 +542,11 @@
     display: none;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 68, 68, 0.1);
-    border: 1px solid rgba(255, 68, 68, 0.2);
-    border-radius: 8px;
+    background: rgba(255, 68, 68, 0.08);
+    border: 1px solid rgba(255, 68, 68, 0.15);
+    border-radius: var(--shekinah-radius-sm, 8px);
     padding: 10px 14px;
-    margin-top: 14px;
+    margin-top: 12px;
     color: #ff6b6b;
     font-size: 0.8rem;
 }
@@ -517,8 +569,10 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.5px;
+    padding-bottom: 8px;
 }
 
 .login-footer-links {
@@ -527,32 +581,52 @@
 }
 
 .login-footer-links a {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.15);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .login-footer-links a:hover {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* ========================================================
    RESPONSIVE
    ======================================================== */
 
+@media (max-width: 1024px) {
+    .login-page {
+        padding-top: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-page {
+        padding-top: 60px;
+    }
+}
+
 @media (max-width: 550px) {
+    .login-page {
+        padding-top: 60px;
+    }
+
     .login-wrapper {
-        padding: 16px;
-        gap: 20px;
+        padding: 12px;
+        gap: 16px;
     }
 
     .login-card {
         padding: 24px 20px 20px;
-        border-radius: 12px;
+        border-radius: var(--shekinah-radius-lg, 12px);
     }
 
     .login-card-header h2 {
         font-size: 1.2rem;
+    }
+
+    .login-card-header p {
+        font-size: 0.75rem;
     }
 
     .login-logo {
@@ -560,11 +634,13 @@
     }
 
     .login-brand {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        letter-spacing: 3px;
     }
 
     .login-subtitle {
-        font-size: 0.6rem;
+        font-size: 0.55rem;
+        letter-spacing: 3px;
     }
 
     .login-field-input input {
@@ -576,9 +652,13 @@
         font-size: 0.75rem;
     }
 
+    .login-field-icon .material-symbols-outlined {
+        font-size: 18px;
+    }
+
     .login-options {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         align-items: flex-start;
     }
 
@@ -587,8 +667,14 @@
         padding: 12px;
     }
 
+    .login-btn-register {
+        font-size: 0.75rem;
+        padding: 10px;
+    }
+
     .login-footer {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+        padding-bottom: 4px;
     }
 
     .login-footer-links {
@@ -596,22 +682,83 @@
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    .login-glow {
+        width: 80vmin;
+        height: 80vmin;
+    }
+
+    .login-logo-container {
+        margin-top: 4px;
+    }
 }
 
 @media (max-width: 380px) {
+    .login-page {
+        padding-top: 56px;
+    }
+
     .login-card {
         padding: 18px 14px 16px;
     }
 
     .login-field {
-        border-radius: 8px;
-    }
-
-    .login-field-icon .material-symbols-outlined {
-        font-size: 18px;
+        border-radius: var(--shekinah-radius-sm, 8px);
     }
 
     .login-brand {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+    }
+
+    .login-logo {
+        height: 40px;
+    }
+
+    .login-logo-container {
+        margin-top: 0;
+    }
+
+    .login-wrapper {
+        gap: 12px;
+        padding: 8px;
+    }
+}
+
+@media (min-width: 2000px) {
+    .login-page {
+        padding-top: 100px;
+    }
+
+    .login-wrapper {
+        max-width: 560px;
+        gap: 40px;
+    }
+
+    .login-card {
+        padding: 48px 44px 38px;
+        border-radius: var(--shekinah-radius-2xl, 24px);
+    }
+
+    .login-card-header h2 {
+        font-size: 2rem;
+    }
+
+    .login-logo {
+        height: 80px;
+    }
+
+    .login-brand {
+        font-size: 2rem;
+        letter-spacing: 8px;
+    }
+
+    .login-field-input input {
+        font-size: 1.1rem;
+        padding: 18px 18px 18px 0;
+    }
+
+    .login-btn {
+        font-size: 1.1rem;
+        padding: 18px;
     }
 }

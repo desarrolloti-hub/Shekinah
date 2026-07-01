@@ -1,0 +1,191 @@
+<!-- FILE: createCollaborator.html -->
+<!-- SHEKINAH CREATE COLLABORATOR - Crear cuenta de colaborador con Planeta 3D -->
+
+<div class="create-collaborator-page">
+    <!-- Contenedor del planeta 3D -->
+    <div id="create-collaborator-three-canvas" class="create-collaborator-planet-container"></div>
+    
+    <!-- Glow decorativo -->
+    <div class="create-collaborator-glow"></div>
+
+    <!-- Contenedor principal del registro -->
+    <div class="create-collaborator-wrapper">
+        <!-- Card de Registro -->
+        <div class="create-collaborator-card shekinah-glass-card">
+            <div class="create-collaborator-card-header">
+                <div class="create-collaborator-back-btn">
+                    <a href="/iniciarSesion" data-link class="create-collaborator-back-link">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Volver
+                    </a>
+                </div>
+                <h2>Registrar Colaborador</h2>
+                <p>Gestiona el acceso a SHEKINAH</p>
+                <div class="create-collaborator-divider"></div>
+            </div>
+
+            <!-- Formulario -->
+            <form class="create-collaborator-form" id="createCollaboratorForm" autocomplete="off">
+                <!-- Campo: Nombre completo -->
+                <div class="create-collaborator-field">
+                    <div class="create-collaborator-field-icon">
+                        <span class="material-symbols-outlined">badge</span>
+                    </div>
+                    <div class="create-collaborator-field-input">
+                        <input 
+                            type="text" 
+                            id="createCollaboratorName" 
+                            placeholder=" " 
+                            required
+                            autocomplete="name"
+                        >
+                        <label for="createCollaboratorName">Nombre completo</label>
+                    </div>
+                </div>
+
+                <!-- Campo: Email -->
+                <div class="create-collaborator-field">
+                    <div class="create-collaborator-field-icon">
+                        <span class="material-symbols-outlined">email</span>
+                    </div>
+                    <div class="create-collaborator-field-input">
+                        <input 
+                            type="email" 
+                            id="createCollaboratorEmail" 
+                            placeholder=" " 
+                            required
+                            autocomplete="email"
+                        >
+                        <label for="createCollaboratorEmail">Correo electrónico</label>
+                    </div>
+                </div>
+
+                <!-- Campo: Teléfono -->
+                <div class="create-collaborator-field">
+                    <div class="create-collaborator-field-icon">
+                        <span class="material-symbols-outlined">phone</span>
+                    </div>
+                    <div class="create-collaborator-field-input">
+                        <input 
+                            type="tel" 
+                            id="createCollaboratorPhone" 
+                            placeholder=" " 
+                            autocomplete="tel"
+                        >
+                        <label for="createCollaboratorPhone">Teléfono (opcional)</label>
+                    </div>
+                </div>
+
+                <!-- Campo: Rol -->
+                <div class="create-collaborator-field">
+                    <div class="create-collaborator-field-icon">
+                        <span class="material-symbols-outlined">assignment_ind</span>
+                    </div>
+                    <div class="create-collaborator-field-input">
+                        <select id="createCollaboratorRole" class="create-collaborator-select" required>
+                            <option value="" disabled selected>Selecciona un rol</option>
+                            <option value="admin">Administrador</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="agente">Agente Aduanal</option>
+                            <option value="operador">Operador Logístico</option>
+                            <option value="ventas">Ventas</option>
+                        </select>
+                        <label for="createCollaboratorRole">Rol</label>
+                    </div>
+                </div>
+
+                <!-- Campo: Contraseña -->
+                <div class="create-collaborator-field">
+                    <div class="create-collaborator-field-icon">
+                        <span class="material-symbols-outlined">lock</span>
+                    </div>
+                    <div class="create-collaborator-field-input">
+                        <input 
+                            type="password" 
+                            id="createCollaboratorPassword" 
+                            placeholder=" " 
+                            required
+                            autocomplete="new-password"
+                            minlength="8"
+                        >
+                        <label for="createCollaboratorPassword">Contraseña</label>
+                    </div>
+                    <button type="button" class="create-collaborator-password-toggle" id="createCollaboratorTogglePassword">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </div>
+
+                <!-- Campo: Confirmar contraseña -->
+                <div class="create-collaborator-field">
+                    <div class="create-collaborator-field-icon">
+                        <span class="material-symbols-outlined">lock_outline</span>
+                    </div>
+                    <div class="create-collaborator-field-input">
+                        <input 
+                            type="password" 
+                            id="createCollaboratorConfirmPassword" 
+                            placeholder=" " 
+                            required
+                            autocomplete="new-password"
+                        >
+                        <label for="createCollaboratorConfirmPassword">Confirmar contraseña</label>
+                    </div>
+                    <button type="button" class="create-collaborator-password-toggle" id="createCollaboratorToggleConfirm">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </div>
+
+                <!-- Términos y condiciones -->
+                <div class="create-collaborator-terms">
+                    <label class="create-collaborator-checkbox">
+                        <input type="checkbox" id="createCollaboratorTerms" required>
+                        <span class="create-collaborator-checkmark"></span>
+                        <span class="create-collaborator-terms-text">
+                            Acepto los <a href="#" class="create-collaborator-terms-link">Términos y Condiciones</a> 
+                            y la <a href="#" class="create-collaborator-terms-link">Política de Privacidad</a>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Botón de registro -->
+                <button type="submit" class="create-collaborator-btn" id="createCollaboratorBtn">
+                    <span class="create-collaborator-btn-text">Registrar colaborador</span>
+                    <span class="create-collaborator-btn-loader" id="createCollaboratorLoader" style="display:none;">
+                        <span class="loader-spinner"></span>
+                    </span>
+                </button>
+
+                <!-- Separador -->
+                <div class="create-collaborator-separator">
+                    <span>¿Ya tienes cuenta?</span>
+                </div>
+
+                <!-- Botón de login -->
+                <button type="button" class="create-collaborator-btn-login" id="createCollaboratorLoginBtn">
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <!-- Mensaje de error -->
+            <div class="create-collaborator-error" id="createCollaboratorError" style="display:none;">
+                <span class="material-symbols-outlined">error_outline</span>
+                <span id="createCollaboratorErrorMessage">Error en el registro</span>
+            </div>
+
+            <!-- Mensaje de éxito -->
+            <div class="create-collaborator-success" id="createCollaboratorSuccess" style="display:none;">
+                <span class="material-symbols-outlined">check_circle</span>
+                <span id="createCollaboratorSuccessMessage">¡Colaborador registrado exitosamente!</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="create-collaborator-footer">
+            <span>© 2024 SHEKINAH Logistics · Precision in Transit</span>
+            <div class="create-collaborator-footer-links">
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Términos de Uso</a>
+            </div>
+        </div>
+    </div>
+</div>

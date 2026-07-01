@@ -1,0 +1,641 @@
+/* ========================================================
+   FILE: components/visitor/cards.css
+   SHEKINAH - Estilos de tarjetas (info-box, servicios, contacto, etc.)
+   ======================================================== */
+
+/* ========================================================
+   INFO BOX - TARJETA PRINCIPAL
+   ======================================================== */
+
+.info-box {
+  max-width: 520px;
+  background: var(--shekinah-bg-card, rgba(11,15,26,0.75));
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--shekinah-border-card, rgba(62,146,204,0.15));
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 28px 32px;
+  box-shadow: var(--shekinah-shadow-md, 0 20px 40px rgba(0,0,0,0.3));
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.info-box .label {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  font-weight: 600;
+  margin-bottom: var(--shekinah-spacing-xs, 4px);
+  display: block;
+}
+
+.info-box h2 {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--shekinah-text-primary, #ffffff);
+  margin: 6px 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.info-box .line {
+  width: 50px;
+  height: 3px;
+  background: var(--shekinah-accent, #3e92cc);
+  margin: 6px 0 14px;
+  border-radius: 2px;
+}
+
+.info-box p {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--shekinah-text-secondary, rgba(255,255,255,0.8));
+  line-height: 1.7;
+}
+
+.info-box .badge {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--shekinah-badge-text, #b0daff);
+  background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+  padding: 4px 12px;
+  border-radius: var(--shekinah-radius-full, 9999px);
+  border: 1px solid var(--shekinah-border-badge, rgba(30,144,255,0.2));
+}
+
+/* ========================================================
+   TARJETAS DE SERVICIOS
+   ======================================================== */
+
+.services-wrapper {
+  display: flex;
+  gap: var(--shekinah-spacing-lg, 20px);
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.services-column {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.service-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--shekinah-text-secondary, rgba(255,255,255,0.8));
+  padding: 5px 0;
+  border-bottom: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.12));
+}
+
+.service-card .icon {
+  font-size: 18px;
+  color: var(--shekinah-accent-light, #7AC6E6);
+}
+
+.service-card .icon.material-symbols-outlined {
+  font-size: 20px;
+  color: var(--shekinah-accent, #3E92CC);
+  background: rgba(62, 146, 204, 0.12);
+  border-radius: 50%;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.service-card .text {
+  font-family: 'Work Sans', sans-serif;
+  line-height: 1.3;
+}
+
+/* ========================================================
+   TARJETAS - MISIÓN Y VISIÓN (SLIDE 2)
+   ======================================================== */
+
+.mision-vision-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.mv-card {
+  background: var(--shekinah-bg-stat, rgba(2,43,58,0.5));
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.12));
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 28px 30px 24px;
+  transition: var(--shekinah-transition-base, 0.3s ease);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+
+.mv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(62, 146, 204, 0.3), transparent 50%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--shekinah-transition-base, 0.3s ease);
+}
+
+.mv-card:hover::before {
+  opacity: 1;
+}
+
+.mv-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--shekinah-border-card, rgba(62,146,204,0.3));
+  box-shadow: var(--shekinah-shadow-lg, 0 12px 40px rgba(0,0,0,0.4));
+}
+
+.mv-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--shekinah-spacing-md, 12px);
+  margin-bottom: 14px;
+}
+
+.mv-icon {
+  font-size: 1rem;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.1));
+}
+
+.mv-icon.material-symbols-outlined {
+  font-size: 22px;
+  color: var(--shekinah-accent-light, #7AC6E6);
+}
+
+.mv-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  letter-spacing: 1.5px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.mv-text {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--shekinah-text-secondary, rgba(255,255,255,0.75));
+  margin: 0 0 14px 0;
+}
+
+.mv-tag {
+  display: inline-block;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
+  color: rgba(122, 198, 230, 0.5);
+  background: rgba(62, 146, 204, 0.06);
+  padding: 3px 14px;
+  border-radius: var(--shekinah-radius-full, 9999px);
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.08));
+}
+
+.mv-card-left {
+  justify-self: start;
+}
+
+.mv-card-right {
+  justify-self: end;
+}
+
+/* ========================================================
+   TARJETAS - IMPORTACIÓN AÉREA (SLIDE 3)
+   ======================================================== */
+
+.import-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--shekinah-spacing-md, 16px);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.import-grid::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, 
+    var(--shekinah-border-soft, rgba(62,146,204,0.1)) 0%,
+    var(--shekinah-border-soft, rgba(62,146,204,0.1)) 100%
+  );
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.import-card {
+  background: var(--shekinah-bg-stat, rgba(2,43,58,0.5));
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.08));
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 20px 18px 16px;
+  text-align: center;
+  transition: var(--shekinah-transition-base, 0.3s ease);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 150px;
+  z-index: 1;
+}
+
+.import-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(62, 146, 204, 0.2), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--shekinah-transition-base, 0.3s ease);
+}
+
+.import-card:hover::before {
+  opacity: 1;
+}
+
+.import-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--shekinah-border-card, rgba(62,146,204,0.25));
+  box-shadow: var(--shekinah-shadow-lg, 0 12px 40px rgba(0,0,0,0.4));
+  background: rgba(11, 15, 26, 0.7);
+}
+
+.card-number {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+  padding: 2px 10px;
+  border-radius: var(--shekinah-radius-full, 9999px);
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.1));
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.card-icon.material-symbols-outlined {
+  font-size: 32px;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  background: rgba(62, 146, 204, 0.08);
+  border-radius: 50%;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  transition: var(--shekinah-transition-base, 0.3s ease);
+}
+
+.import-card:hover .card-icon.material-symbols-outlined {
+  background: rgba(62, 146, 204, 0.2);
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--shekinah-text-primary, #ffffff);
+  margin: 4px 0 6px;
+  line-height: 1.3;
+}
+
+.card-desc {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.65rem;
+  color: var(--shekinah-text-muted, rgba(255,255,255,0.5));
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card-arrow {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 0.8rem;
+  opacity: 0.2;
+  transition: var(--shekinah-transition-base, 0.3s ease);
+}
+
+.card-arrow.material-symbols-outlined {
+  font-size: 20px;
+  color: rgba(122, 198, 230, 0.5);
+}
+
+.import-card:hover .card-arrow.material-symbols-outlined {
+  color: var(--shekinah-accent-light, #7AC6E6);
+}
+
+/* ========================================================
+   TARJETAS - CONTACTO (SLIDE 4)
+   ======================================================== */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.contact-card {
+  background: var(--shekinah-bg-stat, rgba(2,43,58,0.5));
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.08));
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 24px 22px 20px;
+  transition: var(--shekinah-transition-base, 0.3s ease);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--shekinah-radius-lg, 12px);
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(62, 146, 204, 0.2), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--shekinah-transition-base, 0.3s ease);
+}
+
+.contact-card:hover::before {
+  opacity: 1;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--shekinah-border-card, rgba(62,146,204,0.25));
+  box-shadow: var(--shekinah-shadow-lg, 0 12px 40px rgba(0,0,0,0.4));
+}
+
+.contact-card-primary:hover {
+  border-color: rgba(62, 146, 204, 0.5);
+  box-shadow: 0 12px 40px rgba(62, 146, 204, 0.15);
+}
+
+.contact-card-secondary:hover {
+  border-color: rgba(122, 198, 230, 0.4);
+  box-shadow: 0 12px 40px rgba(122, 198, 230, 0.12);
+}
+
+.contact-card-tertiary:hover {
+  border-color: rgba(50, 186, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(50, 186, 255, 0.1);
+}
+
+.contact-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.contact-icon {
+  font-size: 1.2rem;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.1));
+}
+
+.contact-badge {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--shekinah-badge-text, #b0daff);
+  background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+  padding: 2px 12px;
+  border-radius: var(--shekinah-radius-full, 9999px);
+  border: 1px solid var(--shekinah-border-badge, rgba(30,144,255,0.2));
+  letter-spacing: 0.5px;
+}
+
+.contact-name {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--shekinah-text-primary, #ffffff);
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.contact-divider {
+  width: 30px;
+  height: 2px;
+  background: var(--shekinah-accent, #3e92cc);
+  margin: 0 0 14px 0;
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.78rem;
+  color: var(--shekinah-text-secondary, rgba(255,255,255,0.75));
+  line-height: 1.4;
+}
+
+.contact-item-icon {
+  font-size: 18px;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  opacity: 0.7;
+  flex-shrink: 0;
+  width: 24px;
+}
+
+.contact-item-text {
+  word-break: break-word;
+}
+
+/* ========================================================
+   CONTACTOS CLICKEABLES
+   ======================================================== */
+
+.contact-link-item {
+  color: var(--shekinah-text-secondary, rgba(255,255,255,0.75)) !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.contact-link-item:hover {
+  color: var(--shekinah-accent-light, #7AC6E6) !important;
+  text-decoration: underline !important;
+}
+
+.contact-link-item[href^="tel:"]:hover {
+  color: #4CAF50 !important;
+}
+
+.contact-link-item[href^="mailto:"]:hover {
+  color: #FF6B6B !important;
+}
+
+.contact-item a {
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.contact-item a:hover {
+  color: var(--shekinah-accent-light, #7AC6E6) !important;
+  text-decoration: underline !important;
+}
+
+.contact-item a[href^="tel:"]:hover {
+  color: #4CAF50 !important;
+}
+
+.contact-item a[href^="mailto:"]:hover {
+  color: #FF6B6B !important;
+}
+
+/* ========================================================
+   BADGES Y FOOTER DE CONTACTO
+   ======================================================== */
+
+.contact-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 14px 24px;
+  background: var(--shekinah-bg-stat, rgba(2,43,58,0.3));
+  border: 1px solid var(--shekinah-border-soft, rgba(62,146,204,0.08));
+  border-radius: var(--shekinah-radius-lg, 12px);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.contact-footer-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.8rem;
+  color: var(--shekinah-text-secondary, rgba(255,255,255,0.7));
+}
+
+.contact-footer-item .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  opacity: 0.6;
+}
+
+.contact-footer-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--shekinah-border-soft, rgba(62,146,204,0.15));
+}
+
+.contact-badge-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.contact-badge-footer .badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--shekinah-badge-text, #b0daff);
+  background: var(--shekinah-bg-badge, rgba(30,144,255,0.12));
+  padding: 4px 14px;
+  border-radius: var(--shekinah-radius-full, 9999px);
+  border: 1px solid var(--shekinah-border-badge, rgba(30,144,255,0.2));
+}
+
+.contact-footer-item .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--shekinah-accent-light, #7AC6E6);
+  opacity: 0.6;
+}
+
+.contact-link {
+  color: var(--shekinah-accent-light, #7AC6E6);
+  text-decoration: none;
+  transition: var(--shekinah-transition-base, 0.3s ease);
+  font-weight: 500;
+}
+
+.contact-link:hover {
+  color: var(--shekinah-accent, #3e92cc);
+  text-decoration: underline;
+}

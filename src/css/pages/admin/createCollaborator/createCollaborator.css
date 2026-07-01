@@ -1,0 +1,893 @@
+/* ========================================================
+   FILE: createCollaborator.css
+   SHEKINAH CREATE COLLABORATOR - Registrar colaborador con Planeta 3D
+   ======================================================== */
+
+/* ========================================================
+   CONTENEDOR PRINCIPAL
+   ======================================================== */
+
+.create-collaborator-page {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: var(--shekinah-bg-primary, #000c14);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-family: 'Work Sans', sans-serif;
+    padding-top: 80px;
+    box-sizing: border-box;
+}
+
+/* ========================================================
+   RESPONSIVE - AJUSTAR PADDING DEL NAVBAR
+   ======================================================== */
+
+@media (max-width: 1024px) {
+    .create-collaborator-page {
+        padding-top: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .create-collaborator-page {
+        padding-top: 60px;
+    }
+}
+
+@media (max-width: 550px) {
+    .create-collaborator-page {
+        padding-top: 60px;
+    }
+}
+
+@media (max-width: 380px) {
+    .create-collaborator-page {
+        padding-top: 56px;
+    }
+}
+
+/* ========================================================
+   FONDO CON PLANETA 3D
+   ======================================================== */
+
+.create-collaborator-planet-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    background: radial-gradient(ellipse at center, #0f182a 0%, #080c14 100%);
+}
+
+#create-collaborator-three-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    background: radial-gradient(ellipse at center, #0f182a 0%, #080c14 100%);
+}
+
+/* ========================================================
+   OVERLAY DE BRILLO
+   ======================================================== */
+
+.create-collaborator-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vmin;
+    height: 60vmin;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at center,
+        rgba(62, 146, 204, 0.04) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(20px);
+}
+
+/* ========================================================
+   WRAPPER - PERMITE SCROLL
+   ======================================================== */
+
+.create-collaborator-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 440px;
+    padding: 16px 16px 30px;
+    animation: createCollaboratorFadeIn 0.8s ease forwards;
+    margin: 0 auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+    scroll-behavior: smooth;
+}
+
+/* Scrollbar personalizado - WebKit (Chrome, Safari, Edge) */
+.create-collaborator-wrapper::-webkit-scrollbar {
+    width: 4px;
+    background: transparent;
+}
+
+.create-collaborator-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+.create-collaborator-wrapper::-webkit-scrollbar-thumb {
+    background: var(--shekinah-accent, #3E92CC);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.create-collaborator-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--shekinah-accent-light, #7AC6E6);
+}
+
+/* Scrollbar - Firefox */
+.create-collaborator-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: var(--shekinah-accent, #3E92CC) rgba(255, 255, 255, 0.05);
+}
+
+@keyframes createCollaboratorFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================================
+   CARD
+   ======================================================== */
+
+.create-collaborator-card {
+    width: 100%;
+    background: var(--shekinah-bg-card, rgba(2, 43, 58, 0.8));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--shekinah-border-card, rgba(62, 146, 204, 0.15));
+    border-radius: var(--shekinah-radius-xl, 16px);
+    padding: 28px 32px 24px;
+    box-shadow: var(--shekinah-shadow-lg, 0 30px 80px rgba(0, 0, 0, 0.6));
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.create-collaborator-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--shekinah-accent, #3E92CC), transparent);
+    opacity: 0.6;
+}
+
+.create-collaborator-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+}
+
+/* ========================================================
+   CARD HEADER
+   ======================================================== */
+
+.create-collaborator-card-header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.create-collaborator-back-btn {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+}
+
+.create-collaborator-back-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.create-collaborator-back-link:hover {
+    color: var(--shekinah-accent-light, #7AC6E6);
+}
+
+.create-collaborator-back-link .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.create-collaborator-card-header h2 {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+}
+
+.create-collaborator-card-header p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0 0 10px 0;
+}
+
+.create-collaborator-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--shekinah-accent, #3E92CC);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* ========================================================
+   FORMULARIO
+   ======================================================== */
+
+.create-collaborator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ========================================================
+   CAMPOS DE INPUT
+   ======================================================== */
+
+.create-collaborator-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(11, 15, 26, 0.5);
+    border: 1px solid rgba(62, 146, 204, 0.1);
+    border-radius: var(--shekinah-radius-md, 10px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.create-collaborator-field:focus-within {
+    border-color: var(--shekinah-accent, #3E92CC);
+    box-shadow: 0 0 0 4px rgba(62, 146, 204, 0.08);
+    background: rgba(11, 15, 26, 0.7);
+}
+
+.create-collaborator-field-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 0 14px;
+    flex-shrink: 0;
+}
+
+.create-collaborator-field-icon .material-symbols-outlined {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.25);
+    transition: color 0.3s ease;
+}
+
+.create-collaborator-field:focus-within .create-collaborator-field-icon .material-symbols-outlined {
+    color: var(--shekinah-accent-light, #7AC6E6);
+}
+
+.create-collaborator-field-input {
+    flex: 1;
+    position: relative;
+    padding: 2px 0;
+}
+
+.create-collaborator-field-input input,
+.create-collaborator-field-input select {
+    width: 100%;
+    padding: 11px 12px 11px 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.85rem;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.create-collaborator-field-input select {
+    cursor: pointer;
+}
+
+.create-collaborator-field-input select option {
+    background: #001e2f;
+    color: #ffffff;
+}
+
+.create-collaborator-field-input input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgba(11, 15, 26, 0.9) inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.create-collaborator-field-input label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.create-collaborator-field-input input:focus + label,
+.create-collaborator-field-input input:not(:placeholder-shown) + label,
+.create-collaborator-field-input select:focus + label,
+.create-collaborator-field-input select:not([value=""]) + label {
+    top: 0;
+    transform: translateY(-50%) scale(0.75);
+    color: var(--shekinah-accent-light, #7AC6E6);
+    font-weight: 500;
+}
+
+/* Select custom arrow */
+.create-collaborator-field-input {
+    position: relative;
+}
+
+.create-collaborator-field-input::after {
+    content: '▼';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+}
+
+.create-collaborator-password-toggle {
+    background: none;
+    border: none;
+    padding: 0 14px 0 8px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.25);
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-collaborator-password-toggle:hover {
+    color: var(--shekinah-accent-light, #7AC6E6);
+}
+
+.create-collaborator-password-toggle .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* ========================================================
+   TÉRMINOS Y CONDICIONES
+   ======================================================== */
+
+.create-collaborator-terms {
+    margin: 2px 0;
+}
+
+.create-collaborator-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.create-collaborator-checkbox:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.create-collaborator-checkbox input {
+    display: none;
+}
+
+.create-collaborator-checkmark {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    border: 2px solid rgba(62, 146, 204, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-top: 1px;
+}
+
+.create-collaborator-checkbox input:checked + .create-collaborator-checkmark {
+    background: var(--shekinah-accent, #3E92CC);
+    border-color: var(--shekinah-accent, #3E92CC);
+}
+
+.create-collaborator-checkbox input:checked + .create-collaborator-checkmark::after {
+    content: '✓';
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.create-collaborator-checkbox:hover .create-collaborator-checkmark {
+    border-color: var(--shekinah-accent, #3E92CC);
+}
+
+.create-collaborator-terms-text {
+    line-height: 1.5;
+}
+
+.create-collaborator-terms-link {
+    color: var(--shekinah-accent-light, #7AC6E6);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.create-collaborator-terms-link:hover {
+    color: var(--shekinah-accent, #3E92CC);
+    text-decoration: underline;
+}
+
+/* ========================================================
+   BOTONES
+   ======================================================== */
+
+.create-collaborator-btn {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    background: var(--shekinah-btn-primary-bg, #1F7A8C);
+    border: none;
+    border-radius: var(--shekinah-radius-md, 10px);
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+}
+
+.create-collaborator-btn:hover {
+    background: var(--shekinah-btn-primary-hover, #2a9bb0);
+    transform: translateY(-2px);
+    box-shadow: var(--shekinah-shadow-glow, 0 8px 30px rgba(62, 146, 204, 0.3));
+}
+
+.create-collaborator-btn:active {
+    transform: translateY(0);
+}
+
+.create-collaborator-btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.create-collaborator-btn-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================================
+   SEPARADOR
+   ======================================================== */
+
+.create-collaborator-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 0;
+}
+
+.create-collaborator-separator span {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.25);
+    padding: 0 16px;
+    position: relative;
+}
+
+.create-collaborator-separator span::before,
+.create-collaborator-separator span::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.create-collaborator-separator span::before {
+    right: 100%;
+}
+
+.create-collaborator-separator span::after {
+    left: 100%;
+}
+
+/* ========================================================
+   BOTÓN LOGIN
+   ======================================================== */
+
+.create-collaborator-btn-login {
+    width: 100%;
+    padding: 11px;
+    background: transparent;
+    border: 1px solid rgba(62, 146, 204, 0.15);
+    border-radius: var(--shekinah-radius-md, 10px);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.create-collaborator-btn-login:hover {
+    border-color: var(--shekinah-accent, #3E92CC);
+    color: #ffffff;
+    background: rgba(62, 146, 204, 0.05);
+    transform: translateY(-1px);
+}
+
+/* ========================================================
+   ERROR Y ÉXITO
+   ======================================================== */
+
+.create-collaborator-error {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 68, 68, 0.08);
+    border: 1px solid rgba(255, 68, 68, 0.15);
+    border-radius: var(--shekinah-radius-sm, 8px);
+    padding: 10px 14px;
+    margin-top: 10px;
+    color: #ff6b6b;
+    font-size: 0.75rem;
+}
+
+.create-collaborator-error.show {
+    display: flex;
+}
+
+.create-collaborator-error .material-symbols-outlined {
+    font-size: 18px;
+    color: #ff6b6b;
+}
+
+.create-collaborator-success {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: rgba(46, 213, 115, 0.08);
+    border: 1px solid rgba(46, 213, 115, 0.15);
+    border-radius: var(--shekinah-radius-sm, 8px);
+    padding: 10px 14px;
+    margin-top: 10px;
+    color: #2ed573;
+    font-size: 0.75rem;
+}
+
+.create-collaborator-success.show {
+    display: flex;
+}
+
+.create-collaborator-success .material-symbols-outlined {
+    font-size: 18px;
+    color: #2ed573;
+}
+
+/* ========================================================
+   FOOTER
+   ======================================================== */
+
+.create-collaborator-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.5px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+    width: 100%;
+}
+
+.create-collaborator-footer-links {
+    display: flex;
+    gap: 16px;
+}
+
+.create-collaborator-footer-links a {
+    color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.create-collaborator-footer-links a:hover {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ========================================================
+   RESPONSIVE - CON SCROLL AJUSTADO
+   ======================================================== */
+
+@media (max-width: 1024px) {
+    .create-collaborator-page {
+        padding-top: 70px;
+    }
+    .create-collaborator-wrapper {
+        max-height: calc(100vh - 70px);
+    }
+}
+
+@media (max-width: 768px) {
+    .create-collaborator-page {
+        padding-top: 60px;
+    }
+    .create-collaborator-wrapper {
+        max-height: calc(100vh - 60px);
+        padding: 12px 12px 20px;
+    }
+}
+
+@media (max-width: 550px) {
+    .create-collaborator-page {
+        padding-top: 60px;
+    }
+
+    .create-collaborator-wrapper {
+        padding: 10px 10px 20px;
+        max-height: calc(100vh - 60px);
+        max-width: 100%;
+    }
+
+    .create-collaborator-card {
+        padding: 18px 14px 16px;
+        border-radius: var(--shekinah-radius-lg, 12px);
+    }
+
+    .create-collaborator-card-header {
+        margin-bottom: 14px;
+    }
+
+    .create-collaborator-card-header h2 {
+        font-size: 1.15rem;
+    }
+
+    .create-collaborator-card-header p {
+        font-size: 0.7rem;
+    }
+
+    .create-collaborator-back-btn {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 8px;
+        text-align: left;
+    }
+
+    .create-collaborator-back-link {
+        font-size: 0.65rem;
+    }
+
+    .create-collaborator-field-input input,
+    .create-collaborator-field-input select {
+        font-size: 0.8rem;
+        padding: 9px 10px 9px 0;
+    }
+
+    .create-collaborator-field-input label {
+        font-size: 0.7rem;
+    }
+
+    .create-collaborator-field-icon .material-symbols-outlined {
+        font-size: 16px;
+    }
+
+    .create-collaborator-terms {
+        font-size: 0.65rem;
+    }
+
+    .create-collaborator-checkbox {
+        font-size: 0.65rem;
+        gap: 8px;
+    }
+
+    .create-collaborator-checkmark {
+        width: 14px;
+        height: 14px;
+        min-width: 14px;
+    }
+
+    .create-collaborator-btn {
+        font-size: 0.85rem;
+        padding: 11px;
+    }
+
+    .create-collaborator-btn-login {
+        font-size: 0.7rem;
+        padding: 9px;
+    }
+
+    .create-collaborator-footer {
+        font-size: 0.45rem;
+        padding-top: 8px;
+    }
+
+    .create-collaborator-footer-links {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .create-collaborator-glow {
+        width: 80vmin;
+        height: 80vmin;
+    }
+
+    .create-collaborator-form {
+        gap: 10px;
+    }
+
+    /* Scrollbar más delgado en móvil */
+    .create-collaborator-wrapper::-webkit-scrollbar {
+        width: 3px;
+    }
+}
+
+@media (max-width: 380px) {
+    .create-collaborator-page {
+        padding-top: 56px;
+    }
+
+    .create-collaborator-wrapper {
+        padding: 6px 6px 16px;
+        max-height: calc(100vh - 56px);
+    }
+
+    .create-collaborator-card {
+        padding: 12px 10px 14px;
+        border-radius: var(--shekinah-radius-sm, 8px);
+    }
+
+    .create-collaborator-field {
+        border-radius: var(--shekinah-radius-sm, 8px);
+    }
+
+    .create-collaborator-card-header h2 {
+        font-size: 1rem;
+    }
+
+    .create-collaborator-card-header p {
+        font-size: 0.6rem;
+    }
+
+    .create-collaborator-field-input input,
+    .create-collaborator-field-input select {
+        font-size: 0.75rem;
+        padding: 7px 8px 7px 0;
+    }
+
+    .create-collaborator-form {
+        gap: 8px;
+    }
+
+    .create-collaborator-btn {
+        font-size: 0.75rem;
+        padding: 9px;
+    }
+
+    .create-collaborator-btn-login {
+        font-size: 0.65rem;
+        padding: 8px;
+    }
+
+    .create-collaborator-checkbox {
+        font-size: 0.6rem;
+    }
+}
+
+@media (min-width: 2000px) {
+    .create-collaborator-page {
+        padding-top: 100px;
+    }
+
+    .create-collaborator-wrapper {
+        max-height: calc(100vh - 100px);
+        max-width: 520px;
+        padding: 24px 20px 40px;
+    }
+
+    .create-collaborator-card {
+        padding: 40px 42px 32px;
+        border-radius: var(--shekinah-radius-2xl, 24px);
+    }
+
+    .create-collaborator-card-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .create-collaborator-card-header p {
+        font-size: 0.95rem;
+    }
+
+    .create-collaborator-field-input input,
+    .create-collaborator-field-input select {
+        font-size: 1rem;
+        padding: 14px 16px 14px 0;
+    }
+
+    .create-collaborator-btn {
+        font-size: 1rem;
+        padding: 16px;
+    }
+
+    .create-collaborator-btn-login {
+        font-size: 0.9rem;
+        padding: 13px;
+    }
+
+    .create-collaborator-terms {
+        font-size: 0.8rem;
+    }
+
+    .create-collaborator-form {
+        gap: 16px;
+    }
+}
